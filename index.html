@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formation IA — Journée 6 | IA au service des métiers créatifs</title>
+<style>
+:root{
+  --bg:#FFF7F0;--surface:#fff;--surface2:#FFF4ED;--text:#0F172A;--text-sec:#475569;--text-muted:#94A3B8;--border:#FED7AA;
+  --sb:#431407;--sb-text:rgba(255,255,255,.85);--sb-muted:rgba(255,255,255,.4);--sb-hover:rgba(255,255,255,.07);--sb-active:rgba(255,255,255,.15);
+  --c1:#EA580C;--c2:#DB2777;--c3:#0891B2;--c4:#059669;--c5:#D97706;--c6:#DC2626;--c7:#7C3AED;--c8:#0F766E;
+  --c1l:#FFF7ED;--c2l:#FDF2F8;--c3l:#E0F2FE;--c4l:#ECFDF5;--c5l:#FFFBEB;--c6l:#FEF2F2;--c7l:#F5F3FF;--c8l:#F0FDFA;
+  --ok:#22C55E;--r:10px;--sh:0 1px 3px rgba(0,0,0,.08);--shm:0 4px 6px -1px rgba(0,0,0,.1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+.sb{width:256px;background:var(--sb);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-brand{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand .tag{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--sb-muted);text-transform:uppercase;margin-bottom:3px}
+.sb-brand h1{font-size:15px;font-weight:700;color:#fff;line-height:1.3}
+.sb-brand .sub{font-size:11px;color:var(--sb-muted);margin-top:2px}
+.sb-nav{flex:1;padding:10px 8px}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--sb-muted);padding:8px 10px 5px}
+.nb{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border:none;background:none;border-radius:7px;cursor:pointer;color:var(--sb-text);font-size:12.5px;text-align:left;transition:background .12s,color .12s;margin-bottom:2px;line-height:1.3}
+.nb:hover{background:var(--sb-hover);color:#fff}
+.nb.active{background:var(--sb-active);color:#fff}
+.ndot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nb .meta{margin-left:auto;display:flex;align-items:center;gap:4px;flex-shrink:0}
+.nbadge{font-size:9px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 5px;border-radius:4px}
+.nchk{font-size:10px;color:var(--ok)}
+.timer-box{padding:13px 16px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.2)}
+.timer-lbl{font-size:10px;color:var(--sb-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.timer-disp{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:#fff;letter-spacing:-.5px;margin-bottom:7px}
+.timer-disp.warn{color:#FBBF24}
+.timer-disp.danger{color:#EF4444}
+.timer-btns{display:flex;gap:5px}
+.tbtn{flex:1;padding:5px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);border-radius:6px;color:rgba(255,255,255,.7);font-size:11px;cursor:pointer;transition:background .12s}
+.tbtn:hover{background:rgba(255,255,255,.13);color:#fff}
+.tbtn.pri{background:rgba(255,255,255,.14);color:#fff}
+.main{flex:1;overflow-y:auto;scroll-behavior:smooth}
+.sec{display:none}.sec.active{display:block}
+.hero{padding:36px 36px 28px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hero .htag{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:7px}
+.hero h2{font-size:26px;font-weight:800;line-height:1.2;margin-bottom:8px}
+.hero .hsub{font-size:13.5px;color:rgba(255,255,255,.72);max-width:560px;line-height:1.6}
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.obj-pill{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:rgba(255,255,255,.8);line-height:1.4}
+.obj-pill::before{content:'→';color:rgba(255,255,255,.4);flex-shrink:0}
+.home-body{padding:28px 36px;display:grid;gap:22px}
+.matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.mc{border:2px solid var(--border);border-radius:var(--r);padding:13px;cursor:pointer;transition:all .15s;background:var(--surface)}
+.mc:hover{transform:translateY(-2px);box-shadow:var(--shm)}
+.mc-num{font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:5px}
+.mc-need{font-size:12px;color:var(--text);line-height:1.4;margin-bottom:7px;font-weight:600}
+.mc-sub{font-size:11px;color:var(--text-sec);line-height:1.4;margin-bottom:5px}
+.mc-dur{font-size:10px;color:var(--text-muted)}
+.ahdr{padding:28px 36px 22px;color:#fff;position:relative;overflow:hidden}
+.ahdr::after{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05)}
+.atag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:5px}
+.ahdr h2{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:11px}
+.ameta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.adur{font-size:12px;background:rgba(0,0,0,.2);padding:3px 10px;border-radius:20px;font-weight:600}
+.tpill{font-size:11px;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px;font-weight:500}
+.abody{padding:24px 36px;display:grid;gap:18px}
+.obj-block{border-radius:var(--r);padding:14px 16px;display:flex;align-items:flex-start;gap:11px;font-size:13.5px;line-height:1.6;border:1px solid}
+.obj-ico{font-size:20px;flex-shrink:0}
+.steps{display:grid;gap:7px}
+.step{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:background .12s}
+.step:hover{background:var(--surface2)}
+.step.done{background:#F0FDF4;border-color:#BBF7D0}
+.snum{width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--border);background:var(--surface);transition:all .15s}
+.step.done .snum{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.done .snum::before{content:'✓';font-size:12px}
+.step.done .snum span{display:none}
+.stxt{font-size:13px;line-height:1.55;flex:1}
+.step.done .stxt{color:var(--text-sec)}
+.prompts{display:grid;gap:11px}
+.pcrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:10px 13px 9px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.ptitle{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-sec)}
+.cpbtn{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text-sec);flex-shrink:0}
+.cpbtn:hover{border-color:#94A3B8}
+.cpbtn.copied{background:#DCFCE7;border-color:#86EFAC;color:#16A34A}
+.pbody{padding:12px 13px;font-size:13px;line-height:1.75;color:var(--text);white-space:pre-wrap;font-family:inherit}
+.tips-box{border-radius:var(--r);padding:14px 16px;border-left:3px solid}
+.tips-ttl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px}
+.tips-list{display:grid;gap:5px}
+.tip{font-size:12.5px;line-height:1.5;display:flex;gap:7px;align-items:flex-start;color:var(--text-sec)}
+.tip::before{content:'→';flex-shrink:0;opacity:.5}
+.warn-box{background:#FEF3C7;border:1px solid #FCD34D;border-radius:var(--r);padding:12px 14px;font-size:13px;color:#92400E;display:flex;gap:9px;align-items:flex-start}
+.warn-ico{font-size:16px;flex-shrink:0}
+.info-box{background:var(--c3l);border:1px solid #BAE6FD;border-radius:var(--r);padding:12px 14px;font-size:13px;color:#0C4A6E;display:flex;gap:9px;align-items:flex-start}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:900px){.g2,.g3,.matrix{grid-template-columns:1fr}.obj-grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.card h4{font-size:13px;font-weight:700;margin-bottom:8px}
+.card p,.card li{font-size:12.5px;color:var(--text-sec);line-height:1.55}
+.card ul{padding-left:16px;display:grid;gap:4px}
+.cmp-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.cmp-tbl th{background:var(--sb);color:#fff;padding:9px 12px;text-align:left;font-weight:600;font-size:11.5px}
+.cmp-tbl th:first-child{border-radius:7px 0 0 0}
+.cmp-tbl th:last-child{border-radius:0 7px 0 0}
+.cmp-tbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.cmp-tbl tr:last-child td{border-bottom:none}
+.cmp-tbl tr:nth-child(even) td{background:var(--surface2)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.prog-hdr{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:5px}
+.prog-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:12px}
+.prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .3s}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:box-shadow .15s,border-color .15s}
+.res-card:hover{box-shadow:var(--shm);border-color:var(--c1)}
+.res-card .res-src{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.res-card h4{font-size:13.5px;font-weight:700;margin-bottom:6px}
+.res-card p{font-size:12px;color:var(--text-sec);line-height:1.5;margin-bottom:10px}
+.res-link{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;transition:all .12s}
+.toast{position:fixed;bottom:22px;right:22px;background:#1E293B;color:#fff;padding:9px 15px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none;z-index:1000}
+.toast.show{opacity:1;transform:translateY(0)}
+.crcn-block{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+.crcn-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:rgba(255,255,255,.55);margin-bottom:8px}
+.crcn-badges{display:flex;flex-wrap:wrap;gap:5px}
+.crcn-badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:4px 10px;font-size:11px;cursor:default}
+.crcn-code{font-family:monospace;font-weight:800;font-size:11px}
+.crcn-lbl{font-size:10.5px;font-weight:600}
+.crcn-d1{background:rgba(219,234,254,.18);color:#BFDBFE;border:1px solid rgba(191,219,254,.3)}
+.crcn-d2{background:rgba(237,233,254,.18);color:#DDD6FE;border:1px solid rgba(221,214,254,.3)}
+.crcn-d3{background:rgba(220,252,231,.18);color:#BBF7D0;border:1px solid rgba(187,247,208,.3)}
+.crcn-d4{background:rgba(254,243,199,.18);color:#FDE68A;border:1px solid rgba(253,230,138,.3)}
+.crcn-d5{background:rgba(254,226,226,.18);color:#FECACA;border:1px solid rgba(254,202,202,.3)}
+.sec-title{font-size:18px;font-weight:800;padding:24px 36px 4px}
+.sec-sub{font-size:13px;color:var(--text-sec);padding:0 36px 20px;line-height:1.6}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.13);border-radius:3px}
+.sb::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+.page-foot{text-align:center;padding:20px 36px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:10px}
+/* niv-pill : indique le niveau de formation ciblé */
+.niv-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700;margin-right:4px;margin-bottom:4px}
+.niv-cap{background:#FEF3C7;color:#92400E}
+.niv-bac{background:#FFF7ED;color:#C2410C}
+.niv-bts{background:#EDE9FE;color:#5B21B6}
+.niv-dn{background:#F0FDFA;color:#065F46}
+.niv-mas{background:#FDF2F8;color:#9D174D}
+/* CRCN page */
+.crcn-pg-wrap{padding:28px 36px 36px}
+.crcn-pg-hdr{margin-bottom:22px}
+.crcn-pg-hdr h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.crcn-pg-hdr p{font-size:13.5px;color:var(--text-sec)}
+.crcn-name-row{display:flex;gap:10px;align-items:center;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px}
+.cert-open-btn{background:linear-gradient(135deg,#431407,#EA580C);color:#fff;border:none;border-radius:10px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.cert-open-btn:hover{opacity:.88}
+.crcn-score-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:24px;margin-bottom:20px;box-shadow:var(--sh);flex-wrap:wrap}
+.crcn-donut-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:88px;height:88px;flex-shrink:0}
+.crcn-donut{width:88px;height:88px;transform:rotate(-90deg)}
+.crcn-donut-num{position:absolute;font-size:18px;font-weight:800;color:#EA580C}
+.crcn-score-details{flex:1}
+.crcn-score-ttl{font-size:15px;font-weight:800;margin-bottom:10px;color:#0F172A}
+.crcn-stats-row{display:flex;gap:20px;margin-bottom:8px}
+.crcn-stat{text-align:center}
+.crcn-stat-n{font-size:24px;font-weight:800;display:block}
+.crcn-stat-l{font-size:11px;font-weight:600;color:var(--text-sec)}
+.crcn-stat-green .crcn-stat-n{color:#15803D}
+.crcn-stat-yellow .crcn-stat-n{color:#B45309}
+.crcn-stat-gray .crcn-stat-n{color:#94A3B8}
+.crcn-score-sub{font-size:12px;color:var(--text-muted)}
+.crcn-domain-block{background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:var(--sh);margin-bottom:14px}
+.crcn-domain-hdr{padding:10px 16px;display:flex;align-items:center;gap:8px}
+.crcn-domain-icon{font-size:16px}
+.crcn-domain-num{font-size:11px;font-weight:700;color:rgba(255,255,255,.7)}
+.crcn-domain-label{font-size:13px;font-weight:700;color:#fff}
+.crcn-d1-bg{background:linear-gradient(135deg,#1e3a8a,#2563EB)}
+.crcn-d2-bg{background:linear-gradient(135deg,#4c1d95,#7C3AED)}
+.crcn-d3-bg{background:linear-gradient(135deg,#14532d,#16A34A)}
+.crcn-d4-bg{background:linear-gradient(135deg,#78350f,#D97706)}
+.crcn-d5-bg{background:linear-gradient(135deg,#7f1d1d,#DC2626)}
+.crcn-comp-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .1s}
+.crcn-comp-row:last-child{border-bottom:none}
+.crcn-comp-row:hover{background:#FFF7ED}
+.crcn-comp-nc{opacity:.4}
+.crcn-comp-active{background:#FFF7ED}
+.crcn-comp-done{background:#FFF7ED}
+.crcn-comp-code{font-family:monospace;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;flex-shrink:0;min-width:32px;text-align:center}
+.crcn-comp-info{flex:1;min-width:0}
+.crcn-comp-name{font-size:12.5px;color:#374151;display:block;margin-bottom:5px;font-weight:500}
+.crcn-adots{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.crcn-adot{width:20px;height:20px;border-radius:50%;background:#E2E8F0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#64748B;cursor:default;transition:all .2s}
+.crcn-adot.done{background:#EA580C;color:#fff}
+.crcn-prog-bar{height:4px;background:#E2E8F0;border-radius:2px;margin-top:6px;overflow:hidden}
+.crcn-prog-fill{height:4px;border-radius:2px;background:linear-gradient(90deg,#EA580C,#DB2777);transition:width .5s}
+.crcn-degree{border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;flex-shrink:0;white-space:nowrap}
+.crcn-deg-nc{background:#F1F5F9;color:#94A3B8}
+.crcn-deg-none{background:#F1F5F9;color:#94A3B8}
+.crcn-deg-dec{background:#FFF7ED;color:#C2410C}
+.crcn-deg-mai{background:#FEF3C7;color:#B45309}
+.crcn-deg-val{background:#FFF7ED;color:#EA580C;border:1px solid #FED7AA}
+/* Certificat */
+.cert-modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.cert-overlay{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px)}
+.cert-wrap{position:relative;z-index:1;background:#fff;border-radius:16px;max-width:820px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.cert-toolbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #E2E8F0;position:sticky;top:0;background:#fff;z-index:2}
+.cert-toolbar-ttl{font-size:14px;font-weight:700;color:#0F172A}
+.cert-toolbar-btns{display:flex;gap:8px}
+.cert-print-btn{background:linear-gradient(135deg,#431407,#EA580C);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.cert-close-btn{background:#F1F5F9;color:#374151;border:none;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.cert-paper{padding:48px 56px;font-family:'Segoe UI',system-ui,sans-serif;color:#0F172A}
+.cert-logo-line{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:18px}
+.cert-logo-badge{background:linear-gradient(135deg,#431407,#EA580C);color:#fff;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.06em}
+.cert-logo-sep{width:1px;height:30px;background:#E2E8F0}
+.cert-logo-pix{background:linear-gradient(135deg,#EA580C,#DB2777);color:#fff;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:800}
+.cert-main-title{font-size:24px;font-weight:800;text-align:center;letter-spacing:.01em;margin-bottom:4px}
+.cert-main-sub{font-size:13px;color:#64748B;text-align:center;font-weight:500}
+.cert-divider{height:3px;background:linear-gradient(90deg,#431407,#EA580C,#DB2777,#EA580C);border-radius:2px;margin:22px 0}
+.cert-recipient-block{text-align:center;margin:24px 0}
+.cert-certifies{font-size:12.5px;color:#64748B;margin-bottom:10px;font-style:italic}
+.cert-recipient-name{font-size:30px;font-weight:800;color:#EA580C;display:inline-block;padding:0 20px 8px;border-bottom:2px solid #FED7AA;font-style:italic;outline:none;cursor:text;min-width:200px;transition:border-color .2s,background .2s;border-radius:4px 4px 0 0}
+.cert-recipient-name:focus{border-bottom-color:#EA580C;background:#FFF7ED}
+.cert-recipient-name[data-placeholder]:empty::before{content:attr(data-placeholder);color:#94A3B8;font-style:italic}
+.cert-formation-block{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 20px;margin:20px 0;display:flex;gap:20px;flex-wrap:wrap}
+.cert-form-item{flex:1;min-width:140px}
+.cert-form-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94A3B8;margin-bottom:4px}
+.cert-form-value{font-size:13px;font-weight:700;color:#0F172A}
+.cert-comp-section-ttl{font-size:13px;font-weight:700;color:#0F172A;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid #E2E8F0}
+.cert-comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
+.cert-comp-card{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid #E2E8F0}
+.cert-comp-card.valide{background:#FFF7ED;border-color:#FED7AA}
+.cert-comp-card.maitrise{background:#FFFBEB;border-color:#FDE68A}
+.cert-comp-badge{font-family:monospace;font-size:11px;font-weight:800;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.cert-comp-label{font-size:11.5px;font-weight:600;color:#374151;flex:1;line-height:1.3}
+.cert-comp-deg{font-size:10px;font-weight:700;flex-shrink:0}
+.cert-footer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:28px;padding-top:20px;border-top:1px solid #E2E8F0;text-align:center}
+.cert-footer-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94A3B8;margin-bottom:8px}
+.cert-footer-value{font-size:13px;font-weight:700;color:#0F172A;margin-bottom:8px}
+.cert-footer-line{width:80px;height:1px;background:#E2E8F0;margin:8px auto}
+.cert-watermark{text-align:center;margin-top:22px;font-size:10.5px;color:#94A3B8}
+@media print{
+  body > *:not(.cert-modal){display:none!important}
+  .cert-modal{position:static!important;display:block!important;padding:0!important}
+  .cert-overlay,.cert-toolbar{display:none!important}
+  .cert-wrap{max-height:none!important;box-shadow:none!important;border-radius:0!important}
+  .cert-paper{padding:30px 40px!important}
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK -->
+<div id="lockscreen" style="display:none;position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#431407 0%,#C2410C 100%);align-items:center;justify-content:center;flex-direction:column;gap:0">
+  <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:44px 48px 40px;width:100%;max-width:400px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4)">
+    <div style="font-size:40px;margin-bottom:16px">🎨</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px">Formation IA</div>
+    <div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:6px">Journée 6 — Métiers créatifs</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:32px">Saisissez le code fourni par le formateur</div>
+    <input id="lock-input" type="password" placeholder="Code d'accès…" autocomplete="off"
+      style="width:100%;padding:13px 16px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-size:16px;text-align:center;outline:none;letter-spacing:.15em;transition:border-color .2s"
+      onfocus="this.style.borderColor='rgba(255,255,255,.4)'" onblur="this.style.borderColor='rgba(255,255,255,.15)'"
+      onkeydown="if(event.key==='Enter')checkLock()">
+    <div id="lock-err" style="display:none;margin-top:10px;font-size:12px;color:#F87171;font-weight:600">Code incorrect — réessayez</div>
+    <button onclick="checkLock()" style="margin-top:16px;width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#EA580C,#DB2777);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+      → Accéder à la formation
+    </button>
+  </div>
+</div>
+
+<aside class="sb">
+  <div class="sb-brand">
+    <h1>IA & Métiers créatifs</h1>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-label">Navigation</div>
+    <button class="nb active" onclick="go('home',this)">
+      <span style="font-size:15px">🏠</span><span>Accueil &amp; Programme</span>
+    </button>
+    <div class="nav-label" style="margin-top:7px">8 Ateliers</div>
+    <button class="nb" onclick="go('a1',this)" id="nb-a1">
+      <span class="ndot" style="background:#EA580C"></span>
+      <span>Atelier 1 · Adobe Firefly &amp; CC</span>
+      <span class="meta"><span class="nbadge">80'</span><span class="nchk" id="chk-a1" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a2',this)" id="nb-a2">
+      <span class="ndot" style="background:#7C3AED"></span>
+      <span>Atelier 2 · Génération d'images pro</span>
+      <span class="meta"><span class="nbadge">60'</span><span class="nchk" id="chk-a2" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a3',this)" id="nb-a3">
+      <span class="ndot" style="background:#DB2777"></span>
+      <span>Atelier 3 · Réseaux sociaux &amp; Com</span>
+      <span class="meta"><span class="nbadge">55'</span><span class="nchk" id="chk-a3" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a4',this)" id="nb-a4">
+      <span class="ndot" style="background:#0891B2"></span>
+      <span>Atelier 4 · Sites &amp; interfaces</span>
+      <span class="meta"><span class="nbadge">55'</span><span class="nchk" id="chk-a4" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a5',this)" id="nb-a5">
+      <span class="ndot" style="background:#DC2626"></span>
+      <span>Atelier 5 · Vidéo &amp; motion</span>
+      <span class="meta"><span class="nbadge">55'</span><span class="nchk" id="chk-a5" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a6',this)" id="nb-a6">
+      <span class="ndot" style="background:#059669"></span>
+      <span>Atelier 6 · Édition &amp; identité visuelle</span>
+      <span class="meta"><span class="nbadge">50'</span><span class="nchk" id="chk-a6" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a7',this)" id="nb-a7">
+      <span class="ndot" style="background:#0F766E"></span>
+      <span>Atelier 7 · Textile &amp; matériaux</span>
+      <span class="meta"><span class="nbadge">45'</span><span class="nchk" id="chk-a7" style="display:none">✓</span></span>
+    </button>
+    <button class="nb" onclick="go('a8',this)" id="nb-a8">
+      <span class="ndot" style="background:#D97706"></span>
+      <span>Atelier 8 · Direction artistique &amp; DA</span>
+      <span class="meta"><span class="nbadge">50'</span><span class="nchk" id="chk-a8" style="display:none">✓</span></span>
+    </button>
+    <div class="nav-label" style="margin-top:8px">Compétences</div>
+    <button class="nb" id="nav-crcn" onclick="showCRCN(this)">
+      <span style="font-size:14px">🏆</span><span>Compétences CRCN-Édu</span>
+    </button>
+    <div class="nav-label" style="margin-top:8px">Ressources</div>
+    <button class="nb" onclick="go('res',this)">
+      <span style="font-size:14px">🔗</span><span>Outils &amp; Liens utiles</span>
+    </button>
+  </nav>
+  <div class="timer-box">
+    <div class="timer-lbl">⏱ Chronomètre</div>
+    <div class="timer-disp" id="tdisp">00:00</div>
+    <div class="timer-btns">
+      <button class="tbtn pri" id="tstart" onclick="tToggle()">▶ Démarrer</button>
+      <button class="tbtn" onclick="tReset()">↺ Reset</button>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ═══════════════ ACCUEIL ═══════════════ -->
+<section class="sec active" id="sec-home">
+  <div class="hero" style="background:linear-gradient(135deg,#431407 0%,#EA580C 60%,#DB2777 100%)">
+    <div class="htag">Journée 6 · Saint-Géraud Aurillac</div>
+    <h2>IA au service des métiers créatifs</h2>
+    <p class="hsub">Design graphique, communication visuelle, image, vidéo, textile — découvrez les outils IA qui transforment les pratiques de vos formations.</p>
+    <div class="obj-grid">
+      <div class="obj-pill">Maîtriser Adobe Firefly dans le workflow CC</div>
+      <div class="obj-pill">Générer des visuels pro avec Midjourney</div>
+      <div class="obj-pill">Automatiser la communication réseaux sociaux</div>
+      <div class="obj-pill">Créer des sites avec Framer AI &amp; Figma AI</div>
+      <div class="obj-pill">Produire vidéo et motion design avec l'IA</div>
+      <div class="obj-pill">Explorer le textile et les matériaux IA</div>
+      <div class="obj-pill">Construire une direction artistique stratégique</div>
+      <div class="obj-pill">Intégrer l'éthique IA dans les pratiques créatives</div>
+    </div>
+  </div>
+  <div class="home-body">
+    <div>
+      <div class="sec-title" style="padding:0 0 4px">Programme de la journée</div>
+      <div class="matrix">
+        <div class="mc" onclick="go('a1',document.getElementById('nb-a1'))" style="border-color:#EA580C">
+          <div class="mc-num" style="color:#EA580C">Atelier 1 · 80'</div>
+          <div class="mc-need">Adobe Firefly &amp; suite CC</div>
+          <div class="mc-sub">Generative Fill, Vector AI, Recolor, Express — IA native dans votre workflow Adobe</div>
+          <div class="mc-dur">🎯 CAP · Bac Pro AMA · BMA · STD2A</div>
+        </div>
+        <div class="mc" onclick="go('a2',document.getElementById('nb-a2'))" style="border-color:#7C3AED">
+          <div class="mc-num" style="color:#7C3AED">Atelier 2 · 60'</div>
+          <div class="mc-need">Génération d'images pro</div>
+          <div class="mc-sub">Midjourney, Ideogram, Leonardo.ai — prompting DA, moodboards, typographie</div>
+          <div class="mc-dur">🎯 BMA · STD2A · DN MADE · Mastère</div>
+        </div>
+        <div class="mc" onclick="go('a3',document.getElementById('nb-a3'))" style="border-color:#DB2777">
+          <div class="mc-num" style="color:#DB2777">Atelier 3 · 55'</div>
+          <div class="mc-need">Réseaux sociaux &amp; communication</div>
+          <div class="mc-sub">Canva Magic, Predis.ai, Buffer AI — créer, planifier et optimiser ses contenus</div>
+          <div class="mc-dur">🎯 BTS Com · Bachelor · Mastère DA</div>
+        </div>
+        <div class="mc" onclick="go('a4',document.getElementById('nb-a4'))" style="border-color:#0891B2">
+          <div class="mc-num" style="color:#0891B2">Atelier 4 · 55'</div>
+          <div class="mc-need">Sites &amp; interfaces numériques</div>
+          <div class="mc-sub">Framer AI, Figma AI, Spline — créer des expériences web sans code</div>
+          <div class="mc-dur">🎯 BTS Com · DN MADE Numérique · Mastère</div>
+        </div>
+        <div class="mc" onclick="go('a5',document.getElementById('nb-a5'))" style="border-color:#DC2626">
+          <div class="mc-num" style="color:#DC2626">Atelier 5 · 55'</div>
+          <div class="mc-need">Vidéo &amp; motion design</div>
+          <div class="mc-sub">CapCut AI, Runway ML, Adobe Premiere AI, ElevenLabs — du script au clip final</div>
+          <div class="mc-dur">🎯 DN MADE Numérique · BTS · Mastère DA</div>
+        </div>
+        <div class="mc" onclick="go('a6',document.getElementById('nb-a6'))" style="border-color:#059669">
+          <div class="mc-num" style="color:#059669">Atelier 6 · 50'</div>
+          <div class="mc-need">Édition &amp; identité visuelle</div>
+          <div class="mc-sub">Gamma, InDesign AI, Khroma, Fontjoy, Looka — du logo à la maquette éditoriale</div>
+          <div class="mc-dur">🎯 BMA · DN MADE Graphisme · STD2A</div>
+        </div>
+        <div class="mc" onclick="go('a7',document.getElementById('nb-a7'))" style="border-color:#0F766E">
+          <div class="mc-num" style="color:#0F766E">Atelier 7 · 45'</div>
+          <div class="mc-need">Textile &amp; matériaux écoresponsables</div>
+          <div class="mc-sub">Midjourney textures, CLO3D, Substance 3D — concevoir avec l'IA éco-consciente</div>
+          <div class="mc-dur">🎯 DN MADE Matériaux – Textile</div>
+        </div>
+        <div class="mc" onclick="go('a8',document.getElementById('nb-a8'))" style="border-color:#D97706">
+          <div class="mc-num" style="color:#D97706">Atelier 8 · 50'</div>
+          <div class="mc-need">Direction artistique &amp; stratégie</div>
+          <div class="mc-sub">Claude, Perplexity, briefings IA, éthique et droits d'auteur dans les arts créatifs</div>
+          <div class="mc-dur">🎯 Mastère DA · Bachelor · DN MADE</div>
+        </div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card" style="border-color:#EA580C">
+        <h4 style="color:#C2410C">🎓 Formations couvertes</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+          <span class="niv-pill niv-cap">CAP Signalétique</span>
+          <span class="niv-pill niv-bac">Bac Pro AMA Com visuelle</span>
+          <span class="niv-pill niv-bac">Bac Pro AMA Marchandisage</span>
+          <span class="niv-pill niv-bac">BMA Arts graphiques</span>
+          <span class="niv-pill niv-bac">Bac STD2A</span>
+          <span class="niv-pill niv-bts">BTS Communication</span>
+          <span class="niv-pill niv-bts">Bachelor Responsable Com</span>
+          <span class="niv-pill niv-mas">Mastère DA</span>
+          <span class="niv-pill niv-dn">DN MADE Graphisme</span>
+          <span class="niv-pill niv-dn">DN MADE Numérique</span>
+          <span class="niv-pill niv-dn">DN MADE Matériaux</span>
+        </div>
+      </div>
+      <div class="card" style="border-color:#EA580C">
+        <h4 style="color:#C2410C">💰 Outils &amp; tarifs</h4>
+        <table class="cmp-tbl" style="font-size:11.5px">
+          <thead><tr><th>Outil</th><th>Tarif</th><th>Accès</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Adobe Firefly</strong></td><td>Inclus CC (25€/mois)</td><td>Photoshop, Illustrator, Express</td></tr>
+            <tr><td><strong>Canva Pro</strong></td><td>15€/mois · Gratuit éducation</td><td>canva.com</td></tr>
+            <tr><td><strong>Midjourney</strong></td><td>10€/mois (Basic)</td><td>midjourney.com</td></tr>
+            <tr><td><strong>Framer AI</strong></td><td>Gratuit / 20€/mois Pro</td><td>framer.com</td></tr>
+            <tr><td><strong>CapCut AI</strong></td><td>Gratuit (Pro 12€/mois)</td><td>capcut.com</td></tr>
+            <tr><td><strong>Runway ML</strong></td><td>15$ crédits/mois</td><td>runwayml.com</td></tr>
+            <tr><td><strong>ElevenLabs</strong></td><td>Gratuit 10k car./mois</td><td>elevenlabs.io</td></tr>
+            <tr><td><strong>Predis.ai</strong></td><td>29$/mois (Free limité)</td><td>predis.ai</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Formation IA — Métiers créatifs | Bruno TERRASSON</div>
+</section>
+
+<!-- ═══════════════ ATELIER 1 — ADOBE FIREFLY & CC ═══════════════ -->
+<section class="sec" id="sec-a1">
+  <div class="ahdr" style="background:linear-gradient(135deg,#431407,#EA580C)">
+    <div class="atag">Atelier 1 · 80 minutes</div>
+    <h2>Adobe Firefly &amp; IA dans la suite Creative Cloud</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 80 min</span>
+      <span class="tpill">Adobe Firefly</span>
+      <span class="tpill">Photoshop</span>
+      <span class="tpill">Illustrator</span>
+      <span class="tpill">Express</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.2</span><span class="crcn-lbl">Concevoir ressources</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d4"><span class="crcn-code">4.3</span><span class="crcn-lbl">Engager apprenants</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#FFF7ED;border-color:#FED7AA;color:#7C2D12">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Intégrer Adobe Firefly dans un workflow Photoshop et Illustrator professionnel. Maîtriser le Generative Fill, la vectorisation IA et Adobe Express pour produire des assets pédagogiques et créatifs rapidement.</div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">🔥 Panorama Firefly dans la suite Adobe</div>
+      <table class="cmp-tbl">
+        <thead><tr><th>Outil</th><th>Fonctionnalité IA</th><th>Cas d'usage métier</th><th>Niveau</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Photoshop</strong></td><td>Generative Fill, Generative Expand, Remove Object</td><td>Retouche, composition, extension de fond, suppression d'éléments</td><td><span class="niv-pill niv-cap" style="font-size:10px">CAP · Bac Pro</span></td></tr>
+          <tr><td><strong>Illustrator</strong></td><td>Generative Recolor, Text to Vector, Retype</td><td>Déclinaison charte, vectorisation auto, typo créative</td><td><span class="niv-pill niv-bac" style="font-size:10px">BMA · STD2A</span></td></tr>
+          <tr><td><strong>Adobe Express</strong></td><td>Magic Write, Text to Image, Remove Background</td><td>Posts réseaux, flyers, affiches en quelques clics</td><td><span class="niv-pill niv-cap" style="font-size:10px">Tous niveaux</span></td></tr>
+          <tr><td><strong>InDesign</strong></td><td>Generative Fill dans les blocs image</td><td>Maquettes éditoriales, remplissage de gabarits</td><td><span class="niv-pill niv-bts" style="font-size:10px">BTS · DN MADE</span></td></tr>
+          <tr><td><strong>Firefly Web</strong></td><td>Text to Image, Text Effects, Generative Fill</td><td>Création libre, exploration créative sans CC installé</td><td><span class="niv-pill niv-cap" style="font-size:10px">Tous niveaux</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c1)">🖼️ Activité 1 — Generative Fill dans Photoshop (25 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Ouvrez une photo produit</strong> ou une image de signalétique dans Photoshop (CC 2024 minimum requis). Sélectionnez une zone avec l'outil de sélection rectangulaire ou lasso.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Generative Fill :</strong> Dans la barre contextuelle, cliquez sur "Remplissage génératif". Décrivez ce que vous voulez (ex : <em>"urban street background at golden hour"</em>). Firefly génère 3 variantes — choisissez la meilleure.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Generative Expand :</strong> Avec l'outil Recadrage, étendez la toile au-delà des bords de l'image. Sélectionnez les zones vides → Remplissage génératif sans prompt → Firefly prolonge la scène de façon cohérente.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Remove Object :</strong> Sélectionnez un élément indésirable (câble, personne, logo). Touche Suppr → "Remplissage génératif" vide → Firefly reconstruit le fond. Comparez avec l'outil Tampon classique.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>5</span></div><div class="stxt"><strong>Cas pédagogique :</strong> Créez un visuel pour une affiche signalétique de votre établissement. Partez d'une photo du couloir, étendez-la, ajoutez des éléments générés. Exportez en JPEG haute résolution.</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompts Firefly — Photoshop Generative Fill</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">// Fond pour signalétique
+modern school corridor with natural light, clean minimalist, no people, architectural photography
+
+// Extension d'affiche événementielle
+continuation of a vibrant graphic poster background, bold colors, geometric patterns, French school aesthetic
+
+// Remplacement de ciel
+dramatic sunset sky with warm orange and pink clouds, high contrast, cinematic
+
+// Ambiance vitrine commerce
+elegant retail window display background, soft lighting, luxury feel, neutral tones
+
+// Décors pour communication visuelle
+abstract colorful background suitable for typography overlay, gradient mesh, contemporary design</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c1)">✏️ Activité 2 — Illustrator : Text to Vector &amp; Recolor (25 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Text to Vector (bêta) :</strong> Dans Illustrator, ouvrez le panneau "Firefly" (Fenêtre → Firefly). Tapez : <em>"pictogramme d'une école avec une plume et une étoile, style ligne épuré, monochrome"</em>. Générez des icônes vectorielles directement dans Illustrator.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Generative Recolor :</strong> Ouvrez un logo ou une illustration vectorielle existante. Sélectionnez-la → Edition → Recoloriage → "Recoloriage génératif". Décrivez : <em>"couleurs d'automne chaleureuses"</em> ou <em>"palette pastel scandinave"</em>.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Déclinaison de charte :</strong> Prenez votre logo (ou celui de l'établissement). Générez 5 variantes colorées pour différents supports (web, print, fond sombre). Exportez chaque variante en SVG et PNG.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Retype :</strong> Dans Illustrator, sélectionnez du texte vectorisé (converti en tracé). Utilisez Retype pour identifier la police d'origine et proposer des alternatives similaires. Idéal pour les logos clients sans fichier source.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c1)">⚡ Activité 3 — Adobe Express pour la communication rapide (15 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Compte éducation :</strong> Si vous avez Adobe CC, Express est inclus. Connectez-vous sur express.adobe.com. Créez un post Instagram pour un événement de votre établissement via le bouton "+ Créer".</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Magic Write :</strong> Dans Express, cliquez sur l'icône texte → "Magic Write". Décrivez : <em>"Texte accrocheur pour une journée portes ouvertes d'une école de design, ton dynamique, 2 lignes max"</em>.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Remove Background :</strong> Importez une photo de produit ou de personne. Cliquez "Supprimer l'arrière-plan" en un clic. Placez le sujet sur un fond généré par Firefly. Exportez pour les réseaux.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Redimensionnement intelligent :</strong> Créez votre visuel une fois (format Instagram carré). Utilisez "Redimensionner" → sélectionnez Story, LinkedIn, et affiche A4. Express adapte automatiquement la composition.</div></div>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#FFF7ED;border-color:#EA580C">
+      <div class="tips-ttl" style="color:#7C2D12">💡 Conseils formateur — Firefly en classe</div>
+      <div class="tips-list">
+        <div class="tip">Firefly est entraîné uniquement sur des contenus licenciés Adobe Stock — c'est l'argument légal clé face aux élèves qui utilisent d'autres outils.</div>
+        <div class="tip">Les contenus générés sont "Firefly générés" — les élèves doivent le mentionner dans leurs dossiers de certification.</div>
+        <div class="tip">Pour les CAP et Bac Pro, Express est le point d'entrée idéal : pas de courbe d'apprentissage, résultats immédiats.</div>
+        <div class="tip">Illustrator Text to Vector est encore en bêta : les résultats varient selon la description. Insistez sur l'itération et le prompt engineering.</div>
+        <div class="tip">Firefly respecte les styles des artistes vivants — contrairement à Midjourney, on ne peut pas demander "dans le style de [artiste vivant]".</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 1 — Adobe Firefly &amp; CC</div>
+</section>
+
+<!-- ═══════════════ ATELIER 2 — GÉNÉRATION D'IMAGES PRO ═══════════════ -->
+<section class="sec" id="sec-a2">
+  <div class="ahdr" style="background:linear-gradient(135deg,#2E1065,#7C3AED)">
+    <div class="atag">Atelier 2 · 60 minutes</div>
+    <h2>Génération d'images professionnelles pour les arts graphiques</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 60 min</span>
+      <span class="tpill">Midjourney</span>
+      <span class="tpill">Ideogram</span>
+      <span class="tpill">Leonardo.ai</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.2</span><span class="crcn-lbl">Concevoir ressources</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.5</span><span class="crcn-lbl">Posture critique</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#F5F3FF;border-color:#C4B5FD;color:#2E1065">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Maîtriser Midjourney pour la direction artistique et les moodboards. Utiliser Ideogram pour la création typographique. Comprendre les différences entre les outils pour choisir le bon selon le besoin.</div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">🗂️ Panorama des générateurs d'images pro</div>
+      <table class="cmp-tbl">
+        <thead><tr><th>Outil</th><th>Point fort</th><th>Tarif</th><th>Usage idéal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Midjourney</strong></td><td>Qualité artistique exceptionnelle, styles cohérents</td><td>10$/mois</td><td>Moodboards DA, illustrations, visuels haute qualité</td></tr>
+          <tr><td><strong>Ideogram</strong></td><td>Texte dans l'image fiable, typographie intégrée</td><td>Gratuit/9$/mois</td><td>Affiches avec texte, logos conceptuels, typographie créative</td></tr>
+          <tr><td><strong>Leonardo.ai</strong></td><td>Cohérence de personnage, styles fine-tuned</td><td>Gratuit 150 tokens/j</td><td>Personnages cohérents, BD, concept art, jeu vidéo</td></tr>
+          <tr><td><strong>Adobe Firefly</strong></td><td>Légalement sûr, intégré CC</td><td>Inclus CC</td><td>Assets production, workflow professionnel</td></tr>
+          <tr><td><strong>Flux (Black Forest)</strong></td><td>Réalisme photographique, gratuit en ligne</td><td>Gratuit (fal.ai)</td><td>Photos produits, portraits, ambiances réalistes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c7)">🎨 Activité 1 — Midjourney : moodboard &amp; direction artistique (25 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Accès :</strong> Rendez-vous sur midjourney.com → "Start creating" (abonnement ou essai). Utilisez l'interface web directement (plus besoin de Discord depuis 2024).</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Premier moodboard :</strong> Entrez le prompt ci-dessous pour une campagne fictive. Générez 4 images. Sélectionnez la meilleure → cliquez U1-U4 pour upscaler, V1-V4 pour des variantes.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Paramètres avancés :</strong> Testez <code>--ar 16:9</code> (format paysage), <code>--style raw</code> (moins stylisé), <code>--chaos 30</code> (plus de diversité). Comparez les résultats.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Style reference :</strong> Glissez une image existante dans Midjourney pour l'utiliser comme référence de style (<code>--sref URL</code>). Créez une série cohérente pour une marque fictive.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>5</span></div><div class="stxt"><strong>Export &amp; usage :</strong> Téléchargez vos images. Importez-les dans Photoshop pour finalisation. Discutez des droits : Midjourney Basic = usage commercial autorisé.</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompts Midjourney — Design graphique &amp; DA</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">// Campagne de communication visuelle
+editorial campaign for a French design school, bold typography, orange and black color palette, students creating art, high fashion editorial style, --ar 3:2 --v 6.1
+
+// Affiche événementielle
+minimalist event poster for a graphic arts exhibition, geometric shapes, risograph print texture, limited color palette of 3 colors, French contemporary design --ar 2:3
+
+// Identité de marque — moodboard
+brand identity moodboard for an eco-conscious textile brand, earthy tones, sustainable materials, handcrafted feel, editorial photography style --ar 16:9 --style raw
+
+// Illustration pédagogique
+editorial illustration showing creative workflow, isometric style, flat design, vibrant colors, designer at work surrounded by tools --ar 1:1
+
+// Portrait DA — direction artistique
+artistic portrait with dramatic studio lighting, textile textures in background, avant-garde fashion, film photography aesthetic --ar 4:5 --style raw --chaos 20</div>
+      </div>
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompts Ideogram — Typographie &amp; affiches avec texte</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">// Affiche avec texte intégré (Ideogram excelle ici)
+Event poster for "Festival du Design" with bold sans-serif typography, abstract geometric background in orange and deep purple, modern French design aesthetic, the text "FESTIVAL DU DESIGN 2025" prominently displayed
+
+// Logo conceptuel typographique
+Minimalist logo design for "ATELIER CRÉATIF", lettermark style, geometric sans-serif, monochrome black on white, clean professional
+
+// Affiche signalétique
+Wayfinding signage design for a creative school, "ATELIERS DE DESIGN" text in architectural typeface, arrows, clean grid layout, institutional blue and white
+
+// Couverture éditoriale
+Magazine cover design for a graphic arts publication "FORMES & MATIÈRES", bold masthead typography, abstract photography, editorial layout</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c7)">🔬 Activité 2 — Leonardo.ai &amp; cohérence de personnage (20 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Compte gratuit :</strong> Créez un compte sur leonardo.ai (150 tokens/jour gratuits). Explorez les modèles disponibles : Flux, Leonardo Phoenix, Kino XL selon le rendu souhaité.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Elements (cohérence) :</strong> Dans "Image Guidance", utilisez "Character Reference" pour maintenir un personnage cohérent entre plusieurs images. Idéal pour les projets BD ou communication avec mascotte.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Canvas :</strong> Ouvrez le Canvas Leonardo. Générez une illustration, puis avec Inpainting, modifiez seulement une zone (remplacer un vêtement, changer le fond) sans toucher au reste.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Projet synthèse :</strong> Créez une série de 4 visuels cohérents pour une marque fictive (même style, même univers). Assemblez-les dans un PDF de présentation sous InDesign ou Canva.</div></div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <span class="warn-ico">⚖️</span>
+      <div><strong>Droits d'auteur &amp; IA — point essentiel à enseigner :</strong> En France, les images générées par IA ne sont pas protégeables par le droit d'auteur (l'auteur doit être humain). Les élèves peuvent utiliser ces images commercialement selon les CGU de chaque outil, mais doivent mentionner l'usage de l'IA dans leurs travaux de certification. Midjourney Basic = commercial OK. Firefly = commercial OK (Adobe indemnise). Stable Diffusion modèles publics = vérifiez la licence du modèle.</div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 2 — Génération d'images pro</div>
+</section>
+
+<!-- ═══════════════ ATELIER 3 — RÉSEAUX SOCIAUX & COM ═══════════════ -->
+<section class="sec" id="sec-a3">
+  <div class="ahdr" style="background:linear-gradient(135deg,#831843,#DB2777)">
+    <div class="atag">Atelier 3 · 55 minutes</div>
+    <h2>Communication réseaux sociaux &amp; contenus avec l'IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 55 min</span>
+      <span class="tpill">Canva Magic</span>
+      <span class="tpill">Predis.ai</span>
+      <span class="tpill">Buffer AI</span>
+      <span class="tpill">Meta AI</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.2</span><span class="crcn-lbl">Mettre en œuvre</span></span>
+        <span class="crcn-badge crcn-d4"><span class="crcn-code">4.3</span><span class="crcn-lbl">Engager apprenants</span></span>
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.1</span><span class="crcn-lbl">Sélectionner ressources</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#FDF2F8;border-color:#FBCFE8;color:#831843">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Créer une stratégie de contenus réseaux sociaux assistée par IA, générer des visuels et des textes cohérents, planifier et analyser les performances. Applicable directement aux projets BTS Communication et Bachelor.</div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c2)">🎨 Activité 1 — Canva Magic Studio (20 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Magic Design :</strong> Sur canva.com, cliquez "+ Créer un design" → tapez votre besoin : <em>"Post Instagram pour une exposition de travaux d'étudiants en design"</em>. Magic Design génère automatiquement 8 propositions de mise en page avec visuel et texte.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Magic Write :</strong> Dans un design, cliquez sur une zone de texte → "Magic Write" (icône étoile). Prompt : <em>"Légende Instagram engageante pour une affiche de journée portes ouvertes, 150 caractères, 5 hashtags pertinents"</em>.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Magic Resize :</strong> Créez votre post Instagram (1080×1080). Sélectionnez-le → "Redimensionner et Magic Switch". Choisissez : Story (9:16), LinkedIn (1200×628), et X/Twitter. Canva adapte la composition automatiquement.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Brand Kit IA :</strong> Si vous avez Canva Pro, importez un logo et une palette couleur dans "Charte graphique". Canva adapte automatiquement tous les templates à vos couleurs. Testez avec la charte de l'établissement.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c2)">📊 Activité 2 — Predis.ai : générer un mois de contenu (20 min)</div>
+      <div class="info-box" style="margin-bottom:12px">
+        <span style="font-size:16px">🤖</span>
+        <div><strong>Predis.ai</strong> génère en une seule action : le visuel, le texte, les hashtags et le planning d'une semaine complète de posts. C'est l'outil de référence pour les BTS Communication qui gèrent les réseaux d'une organisation.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="snum"><span>1</span></div><div class="stxt"><strong>Créer un compte :</strong> predis.ai → compte gratuit (10 posts/mois). Créez un "Brand" : nom, secteur (Education/Design), charte couleur, ton de communication.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Générer une série :</strong> "Créer du contenu" → choisissez "Post unique" → décrivez : <em>"Présenter les formations design et communication de notre école aux futurs lycéens, ton inspirant, visuels modernes"</em>. Predis génère visuels + textes + hashtags.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Calendrier éditorial :</strong> Dans "Planifier", demandez à l'IA de générer un plan de contenu sur 4 semaines pour une campagne de communication d'établissement (Portes Ouvertes, concours, résultats étudiants…).</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Analyse concurrents :</strong> Dans "Analyser", entrez le compte Instagram d'un établissement similaire. Predis analyse le type de contenus performants, les horaires optimaux, les hashtags utilisés.</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompts réseaux sociaux — BTS Communication</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">// Stratégie éditoriale (Claude ou ChatGPT)
+Je gère les réseaux sociaux d'un lycée de design et communication à Aurillac (Cantal, 500 élèves, formations CAP à Mastère).
+Crée un plan éditorial pour Instagram sur 4 semaines avec :
+- 3 posts par semaine (lundi, mercredi, vendredi)
+- Pour chaque post : thème, format (carrousel/reel/image), légende (200 car. max), 8 hashtags
+- Objectif : attirer des lycéens 15-18 ans et valoriser les travaux d'étudiants
+- Tons : inspirant, authentique, humain
+
+// Rédaction de post engagement
+Écris 3 versions d'une légende Instagram pour présenter ce projet étudiant :
+[DESCRIPTION DU PROJET]
+Format : accroche + 2-3 phrases + CTA + 8 hashtags
+Ton : enthousiaste mais professionnel
+Maximum 200 mots par version
+
+// Brief créatif pour visuels sociaux
+Génère un brief créatif pour une série de 5 posts Instagram présentant nos formations.
+Inclus : direction artistique, palette couleurs, style typographique, cadrage photo, ambiance globale.
+Cible : 16-22 ans intéressés par les métiers créatifs.</div>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#FDF2F8;border-color:#DB2777">
+      <div class="tips-ttl" style="color:#831843">💡 Outils complémentaires réseaux sociaux</div>
+      <div class="tips-list">
+        <div class="tip"><strong>Buffer AI :</strong> buffer.com — planification + génération de légendes par IA. Free plan pour 3 réseaux. Idéal pour gérer les comptes de l'établissement.</div>
+        <div class="tip"><strong>Hootsuite OwlyWriter :</strong> Génération de contenu intégrée dans la plateforme de planification. Version éducation disponible.</div>
+        <div class="tip"><strong>Meta AI dans Instagram :</strong> Directement dans l'app, l'IA propose des légendes, répond aux commentaires, génère des images pour les stories.</div>
+        <div class="tip"><strong>Flick.tech :</strong> Recherche de hashtags et stratégie par IA. Utile pour les projets BTS d'audit de compte.</div>
+        <div class="tip"><strong>Typeface.ai :</strong> Maintient la cohérence de la voix de marque sur tous les contenus générés par IA. Recommandé pour les marques avec charte éditoriale stricte.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 3 — Réseaux sociaux &amp; com</div>
+</section>
+
+<!-- ═══════════════ ATELIER 4 — SITES & INTERFACES ═══════════════ -->
+<section class="sec" id="sec-a4">
+  <div class="ahdr" style="background:linear-gradient(135deg,#0C4A6E,#0891B2)">
+    <div class="atag">Atelier 4 · 55 minutes</div>
+    <h2>Créer des sites &amp; interfaces numériques avec l'IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 55 min</span>
+      <span class="tpill">Framer AI</span>
+      <span class="tpill">Figma AI</span>
+      <span class="tpill">Spline 3D</span>
+      <span class="tpill">Webflow AI</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.2</span><span class="crcn-lbl">Concevoir ressources</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d4"><span class="crcn-code">4.3</span><span class="crcn-lbl">Engager apprenants</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#E0F2FE;border-color:#BAE6FD;color:#0C4A6E">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Créer un site web professionnel ou un prototype d'interface en partant d'un prompt texte. Comparer les approches no-code IA (Framer) et design UX (Figma AI) pour des projets DN MADE Numérique et BTS Communication.</div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">🌐 Panorama des outils web IA</div>
+      <div class="g2">
+        <div class="card" style="border-color:#0891B2">
+          <h4 style="color:#0C4A6E">Framer AI — site en 30 secondes</h4>
+          <p><strong>Principe :</strong> décrivez votre site en texte → Framer génère un site complet, hébergé, responsive, avec animations.</p>
+          <ul style="margin-top:8px">
+            <li>Gratuit jusqu'à 1 site publié</li>
+            <li>Idéal : portfolios, sites d'événements, landing pages</li>
+            <li>CMS intégré pour les actualités</li>
+            <li>Export en code React si besoin</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:#0891B2">
+          <h4 style="color:#0C4A6E">Figma AI — design system &amp; prototypage</h4>
+          <p><strong>Principe :</strong> l'IA dans Figma aide à créer des composants, auto-layout, et générer des maquettes de wireframe.</p>
+          <ul style="margin-top:8px">
+            <li>Plugin Galileo AI : maquette depuis texte</li>
+            <li>Auto Layout intelligent</li>
+            <li>Génération de contenu fictif (noms, avatars, textes)</li>
+            <li>Copilot Figma (bêta 2024) : chat pour modifier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c3)">🚀 Activité 1 — Framer AI : créer un portfolio en 20 min</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Générer le site :</strong> framer.com → "Start with AI". Entrez : <em>"Portfolio créatif pour un étudiant en DN MADE Graphisme. Sections : À propos, Projets (grille), Contact. Design minimaliste, typographie bold, fond blanc cassé."</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Personnaliser :</strong> Changez les couleurs dans le panneau "Style" pour correspondre à une charte. Remplacez les images placeholder par des travaux réels (ou générés par Midjourney à l'atelier 2).</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>CMS Projets :</strong> Dans Framer, ajoutez une collection "Projets" (CMS). Configurez les champs : titre, description, image, catégorie. Liez la grille de la page Projets à cette collection.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Publier :</strong> Cliquez "Publish" → obtenez une URL framer.app. Testez sur mobile. Partagez l'URL. Discutez : en quoi ce site est-il un livrable professionnel crédible ?</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c3)">✏️ Activité 2 — Figma AI : maquetter une app mobile (20 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Plugin Galileo AI :</strong> Dans Figma (compte gratuit), installez le plugin "Galileo AI" (Plugins → Chercher). Lancez-le et décrivez : <em>"Application mobile de suivi des projets étudiants pour une école de design. Écrans : liste des projets, détail projet, profil étudiant."</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Design tokens :</strong> Galileo génère des frames Figma complètes. Explorez le design system créé automatiquement (couleurs, typographie, composants). Identifiez les composants réutilisables.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Prototype interactif :</strong> Reliez les écrans entre eux avec les connecteurs Figma (cliquez l'icône flèche en haut à droite). Créez un parcours utilisateur de 3 écrans. Partagez le lien de prototype.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c3)">🌀 Bonus — Spline AI : interface 3D interactive (10 min)</div>
+      <div class="info-box" style="margin-bottom:10px">
+        <span style="font-size:16px">🔮</span>
+        <div><strong>Spline</strong> (spline.design) permet de créer des scènes 3D interactives embarquables dans n'importe quel site web. Avec l'IA, vous générez des objets 3D en décrivant leur forme et matériau.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt">Créez un compte Spline gratuit. Ouvrez un nouveau projet. Dans la barre gauche, cliquez l'icône IA → "Generate 3D object". Décrivez : <em>"floating geometric crystal, glass material, rotating slowly"</em>.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt">Ajoutez une interaction : sélectionnez l'objet → "Events" → "Mouse Hover" → effet "Scale up". Exportez le code d'intégration iframe et collez-le dans votre site Framer.</div></div>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#E0F2FE;border-color:#0891B2">
+      <div class="tips-ttl" style="color:#0C4A6E">💡 Pour les DN MADE Numérique — aller plus loin</div>
+      <div class="tips-list">
+        <div class="tip"><strong>Webflow + Relume :</strong> relume.io génère des wireframes et des sites Webflow complets depuis un prompt. Plus technique que Framer, mais plus de contrôle CSS.</div>
+        <div class="tip"><strong>v0.dev (Vercel) :</strong> génère des interfaces React/Tailwind depuis une description. Pour les étudiants qui veulent du code propre.</div>
+        <div class="tip"><strong>Rive :</strong> animations interactives avancées avec AI Assist. Export web natif. Parfait pour les micro-interactions dans les portfolios DN MADE.</div>
+        <div class="tip"><strong>Uizard :</strong> transformer un croquis en wireframe numérique via photo. Très utile en phase d'idéation rapide.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 4 — Sites &amp; interfaces</div>
+</section>
+
+<!-- ═══════════════ ATELIER 5 — VIDÉO & MOTION ═══════════════ -->
+<section class="sec" id="sec-a5">
+  <div class="ahdr" style="background:linear-gradient(135deg,#7F1D1D,#DC2626)">
+    <div class="atag">Atelier 5 · 55 minutes</div>
+    <h2>Vidéo &amp; motion design avec l'IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 55 min</span>
+      <span class="tpill">CapCut AI</span>
+      <span class="tpill">Runway ML</span>
+      <span class="tpill">Adobe Premiere AI</span>
+      <span class="tpill">ElevenLabs</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.2</span><span class="crcn-lbl">Concevoir ressources</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d4"><span class="crcn-code">4.3</span><span class="crcn-lbl">Engager apprenants</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#FEF2F2;border-color:#FECACA;color:#7F1D1D">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Produire des contenus vidéo professionnels pour les réseaux sociaux et la communication institutionnelle. Maîtriser CapCut AI pour le montage rapide, Runway pour les effets cinématiques et ElevenLabs pour la voix off.</div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">🎬 Panorama vidéo IA 2025</div>
+      <table class="cmp-tbl">
+        <thead><tr><th>Outil</th><th>Spécialité</th><th>Tarif</th><th>Formation cible</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CapCut AI</strong></td><td>Montage auto, sous-titres, effets sociaux</td><td>Gratuit / Pro 12€</td><td>Tous niveaux — réseaux sociaux</td></tr>
+          <tr><td><strong>Runway ML</strong></td><td>Gen-3 : texte→vidéo, effets IA avancés</td><td>15$/mois (Basic)</td><td>DN MADE Numérique · Mastère DA</td></tr>
+          <tr><td><strong>Adobe Premiere AI</strong></td><td>Speech to Text, Auto Reframe, Enhance Speech</td><td>Inclus CC</td><td>BTS Com · DN MADE · Mastère</td></tr>
+          <tr><td><strong>ElevenLabs</strong></td><td>Voix off réaliste multi-langues, clonage vocal</td><td>Gratuit 10k car/mois</td><td>BTS Com · Bachelor · Mastère</td></tr>
+          <tr><td><strong>Kling AI</strong></td><td>Image→vidéo, mouvements fluides</td><td>Gratuit limité</td><td>DN MADE Numérique · Mastère</td></tr>
+          <tr><td><strong>Pictory</strong></td><td>Article/script → vidéo automatique</td><td>23$/mois</td><td>BTS Communication</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c6)">✂️ Activité 1 — CapCut AI : Reel en 15 minutes (20 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Importer vos médias :</strong> capcut.com (version web) ou app mobile. Importez 3-5 photos ou vidéos de travaux d'étudiants ou de l'établissement. Ou utilisez des images générées à l'atelier 2.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Auto-montage IA :</strong> Cliquez "Créer avec l'IA" → "Script to Video" ou "Auto-cut". Décrivez le contenu voulu : <em>"Présentation dynamique d'une école de design, transitions modernes, musique énergique"</em>. CapCut génère le montage complet.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Sous-titres automatiques :</strong> Importez une vidéo avec parole (ou enregistrez un commentaire). Texte → "Sous-titres automatiques". CapCut transcrit et place les sous-titres animés. Choisissez un style typographique cohérent avec la charte.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Auto Reframe pour Stories :</strong> Avez une vidéo 16:9, cliquez "Recadrage auto" → format 9:16. CapCut recadre intelligemment en suivant le sujet principal. Exportez en 1080×1920 pour les Stories/Reels.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>5</span></div><div class="stxt"><strong>Effets IA :</strong> Testez "CapCut AI Effects" — effet "Peinture à l'huile", "Manga", "Néon cinématique". Appliquez sur une photo portrait d'étudiant. Discutez : quand ces effets sont-ils appropriés professionnellement ?</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c6)">🎙️ Activité 2 — ElevenLabs : voix off professionnelle (15 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Compte gratuit :</strong> elevenlabs.io → inscription. Vous disposez de 10 000 caractères/mois (environ 7 minutes de voix). Choisissez une voix dans la bibliothèque : Bella, Rachel, ou une voix française.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Générer une voix off :</strong> Copiez le script ci-dessous. Collez-le dans ElevenLabs → ajustez Stability (stabilité du ton) et Clarity (clarté). Générez et écoutez. Téléchargez le MP3.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="snum"><span>3</span></div><div class="stxt"><strong>Intégration vidéo :</strong> Importez le MP3 dans CapCut ou Premiere. Synchronisez avec les visuels. Ajustez le timing en déplaçant les clips. Résultat : une vidéo institutionnelle avec voix off pro en 20 minutes.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Dubbing multilingue :</strong> Dans ElevenLabs, l'outil "Dubbing" traduit et redouble une vidéo dans une autre langue (EN, ES, DE…) en conservant le timbre de la voix originale. Utile pour les vidéos de présentation internationale.</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Script voix off — présentation établissement (30 sec)</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">Saint-Géraud, c'est une école où le design rencontre l'ambition.
+Chaque année, des centaines d'étudiants y développent leurs talents créatifs — du CAP au Mastère.
+Graphisme, communication visuelle, textile, numérique : ici, les métiers de demain s'inventent aujourd'hui.
+Rejoignez une communauté de passionnés. Rejoignez Saint-Géraud.</div>
+      </div>
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompt Runway ML — effets cinématiques</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">// Texte vers vidéo (Runway Gen-3)
+Close-up of a designer's hands sketching on paper, pencil moving fluidly, creative studio environment, warm soft lighting, cinematic 4K, slow motion, bokeh background
+
+// Image vers vidéo (ajouter mouvement)
+[Importez votre image] → Camera movement: slow push in, gentle parallax effect, atmospheric haze, film grain
+
+// Motion poster (affiche animée)
+Graphic design poster coming to life, geometric shapes rotating and morphing, bold typography appearing letter by letter, orange and black color scheme, loop animation</div>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#FEF2F2;border-color:#DC2626">
+      <div class="tips-ttl" style="color:#7F1D1D">💡 Adobe Premiere Pro — fonctions IA natives CC</div>
+      <div class="tips-list">
+        <div class="tip"><strong>Speech to Text :</strong> transcription automatique en français → légendes synchronisées en un clic. Fenêtre Texte → Transcription → Générer.</div>
+        <div class="tip"><strong>Auto Reframe :</strong> adapte automatiquement n'importe quelle vidéo à tous les formats (16:9, 9:16, 1:1) en suivant le sujet. Séquence → Auto Reframe.</div>
+        <div class="tip"><strong>Enhance Speech :</strong> améliore la qualité audio d'un enregistrement de mauvaise qualité (micro téléphone, bruit de fond). Dans le panneau Audio, cliquer "Améliorer le discours".</div>
+        <div class="tip"><strong>Remix musical :</strong> adapte automatiquement la durée d'une musique à votre montage sans coupure audible. Essentiel pour les reels et les films étudiants.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 5 — Vidéo &amp; motion</div>
+</section>
+
+<!-- ═══════════════ ATELIER 6 — ÉDITION & IDENTITÉ VISUELLE ═══════════════ -->
+<section class="sec" id="sec-a6">
+  <div class="ahdr" style="background:linear-gradient(135deg,#052E16,#059669)">
+    <div class="atag">Atelier 6 · 50 minutes</div>
+    <h2>Édition, publication &amp; identité visuelle avec l'IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 50 min</span>
+      <span class="tpill">Gamma</span>
+      <span class="tpill">Khroma</span>
+      <span class="tpill">Fontjoy</span>
+      <span class="tpill">Looka</span>
+      <span class="tpill">InDesign AI</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.2</span><span class="crcn-lbl">Concevoir ressources</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.3</span><span class="crcn-lbl">Veille &amp; formation</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#ECFDF5;border-color:#A7F3D0;color:#052E16">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Créer une identité visuelle complète assistée par IA : couleurs, typographie, logo conceptuel, maquette éditoriale. Outils utilisables en BMA Arts graphiques, DN MADE Graphisme et Objets Éditoriaux.</div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c4)">🎨 Activité 1 — Construire une palette &amp; système typographique (15 min)</div>
+      <div class="g2" style="margin-bottom:14px">
+        <div class="card" style="border-color:#059669">
+          <h4 style="color:#052E16">Khroma — palette IA personnalisée</h4>
+          <p>khroma.co apprend vos préférences couleur (vous notez 50 couleurs) puis génère des milliers de palettes sur mesure. Exportez en HEX, RGB, ou directement en palette Adobe.</p>
+          <ul style="margin-top:8px">
+            <li>Gratuit après calibration</li>
+            <li>Palettes 2, 3 ou 4 couleurs</li>
+            <li>Prévisualisation sur typographie, poster, photo</li>
+            <li>Export direct en Adobe Swatch (.ase)</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:#059669">
+          <h4 style="color:#052E16">Fontjoy — association typographique IA</h4>
+          <p>fontjoy.com génère des associations titre/sous-titre/corps de texte harmonieuses. L'IA calcule la "distance visuelle" entre les polices pour créer des contrastes équilibrés.</p>
+          <ul style="margin-top:8px">
+            <li>Gratuit, toutes Google Fonts</li>
+            <li>Verrouiller une police, générer des alternatives</li>
+            <li>Régler le contraste souhaité (harmonieux ↔ contrasté)</li>
+            <li>Copier les imports CSS directement</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Khroma :</strong> Rendez-vous sur khroma.co. Notez vos 50 couleurs préférées (intuitivement, en 3 minutes). Khroma apprend votre sensibilité. Générez 10 palettes pour une marque fictive de votre choix. Exportez en .ase.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Fontjoy :</strong> fontjoy.com → réglez le contraste sur "medium". Générez des associations pour votre marque. Verrouillez la police de titre qui vous plaît, régénérez les associations corps. Notez les noms des polices choisies.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Tester la cohérence :</strong> Créez un A4 dans Canva ou Illustrator avec : votre palette Khroma, vos polices Fontjoy, le nom de votre marque fictive. Évaluez si l'identité visuelle est cohérente et lisible.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c4)">📰 Activité 2 — Gamma : maquette éditoriale &amp; présentation (20 min)</div>
+      <div class="info-box" style="margin-bottom:10px">
+        <span style="font-size:16px">✨</span>
+        <div><strong>Gamma</strong> (gamma.app) génère des présentations, documents et sites web avec une mise en page professionnelle à partir d'un texte ou d'un plan. Résultat immédiat, bien meilleur que PowerPoint IA.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Créer une présentation :</strong> gamma.app → "Générer". Entrez : <em>"Dossier de présentation d'un projet de communication visuelle pour une marque de cosmétiques naturels. Sections : concept, moodboard, identité visuelle, déclinaisons support"</em>. Gamma génère 8-10 slides en 30 secondes.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Thème et images :</strong> Sélectionnez un thème graphique cohérent. Remplacez les images par vos visuels Midjourney (atelier 2) ou Firefly (atelier 1). Gamma intègre aussi Unsplash directement.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Exporter :</strong> Partagez via lien (interactif) ou exportez en PDF ou PowerPoint. Utilisez le lien interactif pour les jurys de projet — les transitions sont plus impactantes qu'un PDF statique.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Cas DN MADE Objets Éditoriaux :</strong> Demandez à Gamma de créer une maquette de magazine 4 pages sur "L'éco-design en 2025". Utilisez-la comme base de maquette à retravailler dans InDesign.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c4)">🔷 Activité 3 — Logo conceptuel avec Looka (10 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Looka :</strong> looka.com → "Créer un logo". Entrez le nom de votre marque fictive, secteur (Design/Arts), préférences stylistiques (minimal/moderne/classique). Looka génère 12+ propositions de logo en quelques secondes.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Analyser les propositions :</strong> Pour chaque logo généré, identifiez : le style (wordmark, lettermark, emblème), la grille sous-jacente, les polices utilisées. En quoi ces choix correspondent-ils (ou non) au brief ?</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Critique professionnelle :</strong> Importez le logo dans Illustrator. Analysez les courbes de Bézier, l'équilibre des masses, la lisibilité en petit format. Quelles corrections un designer humain apporterait-il ?</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompt Claude/ChatGPT — brief identité visuelle complet</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">Tu es directeur artistique. Rédige un brief d'identité visuelle complet pour :
+Marque : [NOM]
+Secteur : [SECTEUR]
+Cible : [DESCRIPTION CIBLE]
+Valeurs : [3 valeurs clés]
+
+Le brief doit inclure :
+1. Positionnement et territoire de marque (100 mots)
+2. Direction artistique : 3 adjectifs visuels + 1 référence (pas de marque concurrente)
+3. Palette couleur recommandée : couleur principale + 2 complémentaires + 1 neutre (avec justification)
+4. Typographie : 1 police titre + 1 police corps (Google Fonts de préférence)
+5. Style photographique : 5 mots-clés pour le casting photo
+6. Ce qu'il FAUT éviter absolument (3 interdits visuels)
+7. Exemple de prompt Midjourney pour un visuel représentatif</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 6 — Édition &amp; identité visuelle</div>
+</section>
+
+<!-- ═══════════════ ATELIER 7 — TEXTILE & MATÉRIAUX ═══════════════ -->
+<section class="sec" id="sec-a7">
+  <div class="ahdr" style="background:linear-gradient(135deg,#042F2E,#0F766E)">
+    <div class="atag">Atelier 7 · 45 minutes</div>
+    <h2>Textile, matériaux &amp; écoconception avec l'IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 45 min</span>
+      <span class="tpill">Midjourney textures</span>
+      <span class="tpill">Adobe Substance 3D</span>
+      <span class="tpill">CLO3D</span>
+      <span class="tpill">IA éco-matériaux</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.4</span><span class="crcn-lbl">Numérique responsable</span></span>
+        <span class="crcn-badge crcn-d3"><span class="crcn-code">3.1</span><span class="crcn-lbl">Concevoir situations</span></span>
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.5</span><span class="crcn-lbl">Posture critique</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#F0FDFA;border-color:#99F6E4;color:#042F2E">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Explorer les outils IA spécifiques au DN MADE Matériaux – Textile : génération de textures et motifs, simulation de drapé, recherche de matériaux écoresponsables assistée par IA.</div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c8)">🧵 Activité 1 — Midjourney pour les textures et motifs textile (15 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Génération de motifs :</strong> Dans Midjourney, utilisez le paramètre <code>--tile</code> pour créer des motifs répétables (seamless). Parfait pour les imprimés textile, papiers peints, ou motifs de packaging.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Test de répétition :</strong> Téléchargez le motif généré. Dans Photoshop, créez un motif via Edit → Define Pattern. Appliquez-le sur un rectangle 30×40cm pour simuler un tissu. Évaluez la répétition.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Exploration matières :</strong> Utilisez les prompts ci-dessous pour générer des textures haute résolution de matériaux : lin, coton bio, liège, fibre de bambou. Utilisez-les comme références dans un dossier de recherche matériaux.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Mockup produit :</strong> Importez votre motif dans un template de mockup textile (smartmockups.com). Visualisez votre motif sur un t-shirt, un tote bag, ou une chemise. Exportez pour le book de présentation.</div></div>
+      </div>
+      <div class="prompts" style="margin-top:12px">
+        <div class="pcrd">
+          <div class="phdr"><span class="ptitle">Prompts Midjourney — textures &amp; motifs textile</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+          <div class="pbody">// Motif répétable (seamless)
+hand-painted botanical floral pattern, watercolor technique, soft muted earthy tones, seamless repeat, suitable for fabric printing --tile --ar 1:1
+
+// Texture matière naturelle
+close-up macro photography of organic linen fabric texture, natural beige tone, woven threads visible, studio lighting, high resolution material reference --ar 1:1
+
+// Motif géométrique écoresponsable
+geometric abstract pattern inspired by natural forms — leaves, seeds, spirals — minimal color palette of sage green and terracotta, seamless, screen print aesthetic --tile
+
+// Texture matériau innovant
+recycled ocean plastic material texture, blue-grey tones, slightly translucent, industrial aesthetic, innovative sustainable material reference photo
+
+// Motif Jacquard
+traditional Jacquard weaving pattern reimagined in contemporary style, black and gold thread, intricate geometric, luxury fashion editorial</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c8)">🌿 Activité 2 — IA pour la recherche de matériaux écoresponsables (15 min)</div>
+      <div class="g2" style="margin-bottom:12px">
+        <div class="card" style="border-color:#0F766E">
+          <h4 style="color:#042F2E">Outils de recherche matériaux IA</h4>
+          <ul>
+            <li><strong>Material District (materialdistrict.com) :</strong> base de données mondiale de matériaux innovants, filtrable par propriété (recyclé, biosourcé, compostable)</li>
+            <li><strong>Sourcemap :</strong> traçabilité des chaînes d'approvisionnement textile</li>
+            <li><strong>Claude/ChatGPT :</strong> recherche et comparaison de matériaux alternatifs écoresponsables</li>
+            <li><strong>GoodOnYou :</strong> évaluation éthique et environnementale des marques textiles</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:#0F766E">
+          <h4 style="color:#042F2E">Adobe Substance 3D Sampler</h4>
+          <p>Créez des matériaux PBR (Physically Based Rendering) depuis une simple photo. Parfait pour simuler des textures réalistes dans des maquettes 3D ou des rendus produits.</p>
+          <ul style="margin-top:8px">
+            <li>Photographiez un tissu, un papier, un bois</li>
+            <li>Substance extrait automatiquement : albedo, roughness, normal map</li>
+            <li>Exportez le matériau vers Blender, Cinema 4D, ou un rendu web</li>
+            <li>Inclus dans Adobe CC (Plan All Apps)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Recherche IA matériaux :</strong> Dans Claude ou ChatGPT, demandez : <em>"Liste 5 alternatives écoresponsables au polyester pour la création de vêtements de sport. Pour chacune : propriétés techniques, impact carbone comparé, fournisseurs européens, prix indicatif au mètre."</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Substance 3D Sampler :</strong> Photographiez un textile présent dans la salle (ou utilisez une image Midjourney d'une texture). Importez dans Substance Sampler → "Create Material from Photo". Exportez le matériau PBR.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Dossier matériaux IA :</strong> Créez un document A4 dans Gamma ou InDesign présentant 3 matériaux écoresponsables de votre choix : visuel texture (Midjourney), propriétés (IA), source (Material District), usage recommandé.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c8)">👗 CLO3D — simulation textile numérique (aperçu)</div>
+      <div class="info-box">
+        <span style="font-size:16px">👗</span>
+        <div><strong>CLO3D</strong> est le standard industriel de la mode pour simuler le tombé et le comportement des tissus en 3D. En version académique (tarif réduit), les étudiants DN MADE peuvent prototyper des vêtements virtuellement avant de couper le tissu — réduisant les déchets de 40 à 60%. L'IA intégrée propose des ajustements de patronage automatiques selon le biotype du mannequin.</div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <span class="warn-ico">🌍</span>
+      <div><strong>Point éthique — empreinte carbone des IA génératives :</strong> générer 1000 images avec Midjourney consomme autant d'électricité qu'une charge de smartphone. À l'échelle d'un projet, l'IA reste moins coûteuse en carbone que les achats de tissus pour les prototypes. Mais cette sobriété numérique doit être consciente et enseignée. Sources : AI Index 2024, Green Algorithms Calculator.</div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 7 — Textile &amp; matériaux</div>
+</section>
+
+<!-- ═══════════════ ATELIER 8 — DIRECTION ARTISTIQUE & STRATÉGIE ═══════════════ -->
+<section class="sec" id="sec-a8">
+  <div class="ahdr" style="background:linear-gradient(135deg,#451A03,#D97706)">
+    <div class="atag">Atelier 8 · 50 minutes</div>
+    <h2>Direction artistique, stratégie créative &amp; éthique IA</h2>
+    <div class="ameta">
+      <span class="adur">⏱ 50 min</span>
+      <span class="tpill">Claude</span>
+      <span class="tpill">Perplexity</span>
+      <span class="tpill">ChatGPT</span>
+      <span class="tpill">Éthique &amp; droits</span>
+    </div>
+    <div class="crcn-block">
+      <div class="crcn-title">CRCN-Édu travaillées</div>
+      <div class="crcn-badges">
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.5</span><span class="crcn-lbl">Posture critique</span></span>
+        <span class="crcn-badge crcn-d1"><span class="crcn-code">1.4</span><span class="crcn-lbl">Numérique responsable</span></span>
+        <span class="crcn-badge crcn-d2"><span class="crcn-code">2.1</span><span class="crcn-lbl">Sélectionner ressources</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="abody">
+    <div class="obj-block" style="background:#FFFBEB;border-color:#FDE68A;color:#451A03">
+      <span class="obj-ico">🎯</span>
+      <div><strong>Objectif :</strong> Maîtriser l'IA comme outil de direction artistique stratégique (tendances, brief, storytelling de marque) et comprendre les enjeux éthiques, légaux et professionnels pour les Mastère DA, Bachelor et DN MADE.</div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c5)">🔭 Activité 1 — Veille tendances avec Perplexity &amp; IA (15 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Perplexity AI :</strong> perplexity.ai (gratuit). Activez "Pro Search". Demandez : <em>"Quelles sont les 5 tendances majeures du design graphique en 2025 ? Inclure des exemples de studios, des sources, et comment elles impactent la communication visuelle en France."</em> — Perplexity cite ses sources, contrairement à ChatGPT.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Veille sectorielle ciblée :</strong> Demandez : <em>"Surveille les dernières publications de Pentagram, Sagmeister & Walsh, et Malika Favre. Quels projets ont été publiés ce mois-ci ? Quelles directions artistiques émergent ?"</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Rapport de tendances :</strong> Compilez les résultats dans un document Gamma. Structurez : tendance 1 → description → exemple → implication pour vos projets. Partagez en groupe : quelle tendance est la plus pertinente pour votre formation ?</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c5)">🎭 Activité 2 — IA comme co-directeur artistique (20 min)</div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Brief créatif IA :</strong> Dans Claude, utilisez le prompt "DA complet" ci-dessous pour un projet fictif au choix. Évaluez : l'IA comprend-elle les nuances de la DA ? Que manque-t-il qu'un directeur artistique humain apporterait ?</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Critique de l'IA :</strong> Demandez à Claude de critiquer votre dernier projet (décrivez-le). <em>"Joue le rôle d'un directeur artistique senior. Analyse les forces et faiblesses de ce projet, suggère 3 directions alternatives, et identifie ce qui manque pour atteindre un niveau international."</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Storytelling de marque :</strong> Pour votre marque fictive créée dans la journée, demandez : <em>"Crée le storytelling complet de cette marque : origine, mission, valeurs, archétype de marque (Carl Jung), territoire narratif, manifeste de 100 mots."</em></div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Pitch deck IA :</strong> Assemblez dans Gamma : brief créatif, direction artistique, palette Khroma, polices Fontjoy, 3 visuels Midjourney, storytelling. Présentez votre marque fictive en 5 slides. C'est le livrable final de la journée.</div></div>
+      </div>
+    </div>
+
+    <div class="prompts">
+      <div class="pcrd">
+        <div class="phdr"><span class="ptitle">Prompt Claude — brief DA complet</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+        <div class="pbody">Tu es directeur artistique senior avec 15 ans d'expérience en communication visuelle internationale.
+
+Je travaille sur le projet suivant :
+Client : [NOM DU CLIENT]
+Secteur : [SECTEUR]
+Projet : [DESCRIPTION DU PROJET]
+Cible : [CIBLE DÉMOGRAPHIQUE ET PSYCHOGRAPHIQUE]
+Budget : [FOURCHETTE]
+Délai : [DÉLAI]
+
+En tant que DA, fournis-moi :
+1. ANALYSE STRATÉGIQUE (200 mots) : enjeux, opportunités, risques
+2. TERRITOIRE CRÉATIF : 3 directions artistiques distinctes avec pour chacune :
+   - Titre de la direction (2-3 mots)
+   - Description visuelle (100 mots)
+   - Références (artistes, studios, campagnes — pas de concurrents directs)
+   - Prompt Midjourney représentatif
+3. RECOMMANDATION : quelle direction tu privilégierais et pourquoi
+4. LIVRABLES SUGGÉRÉS : liste complète pour ce projet
+5. POINT DE VIGILANCE : ce qui pourrait faire rater ce projet</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">⚖️ Éthique &amp; droits — les points essentiels pour les métiers créatifs</div>
+      <div class="g3">
+        <div class="card" style="border-color:#DC2626">
+          <h4 style="color:#7F1D1D">❌ Ce qu'on ne peut PAS faire</h4>
+          <ul>
+            <li>Générer des images "dans le style de [artiste vivant]" sur Firefly (bloqué)</li>
+            <li>Utiliser des images IA dans des concours qui l'interdisent explicitement</li>
+            <li>Prétendre qu'un visuel IA est une photo réelle dans un contexte publicitaire (Loi Sapin II)</li>
+            <li>Vendre des images IA via Midjourney Basic sans mention explicite</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:#D97706">
+          <h4 style="color:#451A03">⚠️ Zone grise à enseigner</h4>
+          <ul>
+            <li>Les certifications (CAP, BTS) : les référentiels ne précisent pas encore la place de l'IA — vérifiez les consignes d'examen annuellement</li>
+            <li>Copyright : en France, une image IA n'est pas protégeable — mais la composition finale avec IA peut l'être si l'humain a créé une œuvre originale</li>
+            <li>Midjourney v6 et les styles d'artistes : techniquement possible, éthiquement discutable</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:#059669">
+          <h4 style="color:#052E16">✅ Bonnes pratiques professionnelles</h4>
+          <ul>
+            <li>Mentionner "Créé avec assistance IA" dans les dossiers de certification</li>
+            <li>Utiliser Firefly pour les projets clients (couverture légale Adobe)</li>
+            <li>Garder les prompts et itérations comme preuve du processus créatif</li>
+            <li>Former les élèves à évaluer critiquement les sorties IA (Midjourney hallucine les mains, les textes, les logos)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#FFFBEB;border-color:#D97706">
+      <div class="tips-ttl" style="color:#451A03">💡 Pour le Mastère DA — IA comme outil de compétitivité</div>
+      <div class="tips-list">
+        <div class="tip">Un DA qui maîtrise l'IA peut produire des pitchs visuels 5× plus vite : moodboards Midjourney en 10 min vs 2h de sourcing manuel.</div>
+        <div class="tip">L'IA ne remplace pas le jugement esthétique — elle amplifie la capacité de production. La valeur du DA est dans la sélection, pas dans la génération.</div>
+        <div class="tip">Les studios qui recrutent en 2025 demandent "maîtrise des outils IA génératifs" dans 67% des offres (LinkedIn Talent Insights, Jan 2025).</div>
+        <div class="tip">Enseigner l'IA dans les formations créatives, c'est aussi enseigner la pensée critique : reconnaître ce qui est générique, what makes it "too AI-looking", et comment l'humaniser.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 · Atelier 8 — Direction artistique &amp; stratégie</div>
+</section>
+
+<!-- ═══════════════ RESSOURCES ═══════════════ -->
+<section class="sec" id="sec-res">
+  <div class="sec-title">Ressources &amp; outils utiles</div>
+  <div class="sec-sub">Liens directs vers tous les outils abordés lors de la journée. Cliquez pour ouvrir dans un nouvel onglet.</div>
+  <div style="padding:0 36px 36px">
+
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--c1)">🎨 Adobe &amp; création graphique</div>
+    <div class="res-grid" style="margin-bottom:22px">
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c1)">Adobe</div>
+        <h4>Firefly (Web)</h4>
+        <p>Génération d'images, Generative Fill, Text Effects — accès direct via le navigateur.</p>
+        <a href="https://firefly.adobe.com" target="_blank" class="res-link" style="background:#FFF7ED;color:#C2410C">→ firefly.adobe.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c1)">Adobe</div>
+        <h4>Express</h4>
+        <p>Création rapide de visuels pour réseaux sociaux avec IA intégrée.</p>
+        <a href="https://express.adobe.com" target="_blank" class="res-link" style="background:#FFF7ED;color:#C2410C">→ express.adobe.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c5)">Design IA</div>
+        <h4>Khroma — palettes couleur</h4>
+        <p>IA qui apprend vos préférences couleur pour générer des palettes sur mesure.</p>
+        <a href="https://khroma.co" target="_blank" class="res-link" style="background:#FFFBEB;color:#B45309">→ khroma.co</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c5)">Design IA</div>
+        <h4>Fontjoy — typographie</h4>
+        <p>Associations typographiques harmonieuses générées par IA. Toutes Google Fonts.</p>
+        <a href="https://fontjoy.com" target="_blank" class="res-link" style="background:#FFFBEB;color:#B45309">→ fontjoy.com</a>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--c7)">🖼️ Génération d'images</div>
+    <div class="res-grid" style="margin-bottom:22px">
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c7)">Image IA</div>
+        <h4>Midjourney</h4>
+        <p>Génération d'images haute qualité via Discord. v6 pour la qualité maximale.</p>
+        <a href="https://midjourney.com" target="_blank" class="res-link" style="background:#F5F3FF;color:#5B21B6">→ midjourney.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c7)">Image IA</div>
+        <h4>Ideogram 2.0</h4>
+        <p>Spécialiste texte dans l'image — typographie, affiches, logos textuels.</p>
+        <a href="https://ideogram.ai" target="_blank" class="res-link" style="background:#F5F3FF;color:#5B21B6">→ ideogram.ai</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c7)">Image IA</div>
+        <h4>Leonardo.ai</h4>
+        <p>Contrôle avancé du style, ControlNet, cohérence de personnages.</p>
+        <a href="https://leonardo.ai" target="_blank" class="res-link" style="background:#F5F3FF;color:#5B21B6">→ leonardo.ai</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c7)">Image IA</div>
+        <h4>Looka — logo IA</h4>
+        <p>Génération de logos et identités visuelles par IA. Analyse critique en cours de formation.</p>
+        <a href="https://looka.com" target="_blank" class="res-link" style="background:#F5F3FF;color:#5B21B6">→ looka.com</a>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--c2)">📱 Réseaux sociaux &amp; communication</div>
+    <div class="res-grid" style="margin-bottom:22px">
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c2)">Social IA</div>
+        <h4>Predis.ai</h4>
+        <p>Génération automatique de posts réseaux sociaux (visuel + texte + hashtags).</p>
+        <a href="https://predis.ai" target="_blank" class="res-link" style="background:#FDF2F8;color:#9D174D">→ predis.ai</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c2)">Social IA</div>
+        <h4>Canva Magic Studio</h4>
+        <p>Magic Write, Magic Design, Background Remover — IA intégrée dans Canva.</p>
+        <a href="https://canva.com" target="_blank" class="res-link" style="background:#FDF2F8;color:#9D174D">→ canva.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c2)">Social IA</div>
+        <h4>Buffer AI</h4>
+        <p>Planification et génération de contenus pour tous les réseaux sociaux.</p>
+        <a href="https://buffer.com" target="_blank" class="res-link" style="background:#FDF2F8;color:#9D174D">→ buffer.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c2)">Social IA</div>
+        <h4>Gamma</h4>
+        <p>Présentations, documents et sites web générés par IA. Alternative à PowerPoint.</p>
+        <a href="https://gamma.app" target="_blank" class="res-link" style="background:#FDF2F8;color:#9D174D">→ gamma.app</a>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--c6)">🎬 Vidéo &amp; audio</div>
+    <div class="res-grid" style="margin-bottom:22px">
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c6)">Vidéo IA</div>
+        <h4>CapCut AI</h4>
+        <p>Montage auto, sous-titres, effets IA. Gratuit sur web et mobile.</p>
+        <a href="https://capcut.com" target="_blank" class="res-link" style="background:#FEF2F2;color:#7F1D1D">→ capcut.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c6)">Vidéo IA</div>
+        <h4>Runway ML</h4>
+        <p>Gen-3 : texte→vidéo, image→vidéo, effets cinématiques avancés.</p>
+        <a href="https://runwayml.com" target="_blank" class="res-link" style="background:#FEF2F2;color:#7F1D1D">→ runwayml.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c6)">Audio IA</div>
+        <h4>ElevenLabs</h4>
+        <p>Synthèse vocale réaliste, dubbing multilingue, clonage vocal.</p>
+        <a href="https://elevenlabs.io" target="_blank" class="res-link" style="background:#FEF2F2;color:#7F1D1D">→ elevenlabs.io</a>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--c3)">🌐 Sites &amp; interfaces</div>
+    <div class="res-grid" style="margin-bottom:22px">
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c3)">Site IA</div>
+        <h4>Framer AI</h4>
+        <p>Génération de sites web design par IA, personnalisation complète, publication directe.</p>
+        <a href="https://framer.com" target="_blank" class="res-link" style="background:#E0F2FE;color:#0C4A6E">→ framer.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c3)">Site IA</div>
+        <h4>Figma AI</h4>
+        <p>Auto Layout, Fill with AI, prototypage rapide — IA native dans Figma.</p>
+        <a href="https://figma.com" target="_blank" class="res-link" style="background:#E0F2FE;color:#0C4A6E">→ figma.com</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c3)">Veille</div>
+        <h4>Perplexity AI</h4>
+        <p>Moteur de recherche IA avec citations. Idéal pour la veille tendances en DA.</p>
+        <a href="https://perplexity.ai" target="_blank" class="res-link" style="background:#E0F2FE;color:#0C4A6E">→ perplexity.ai</a>
+      </div>
+      <div class="res-card">
+        <div class="res-src" style="color:var(--c3)">LLM</div>
+        <h4>Claude (Anthropic)</h4>
+        <p>IA conversationnelle pour brief créatif, storytelling, critique DA, rédaction.</p>
+        <a href="https://claude.ai" target="_blank" class="res-link" style="background:#E0F2FE;color:#0C4A6E">→ claude.ai</a>
+      </div>
+    </div>
+
+    <div class="tips-box" style="background:#FFF7ED;border-color:#EA580C">
+      <div class="tips-ttl" style="color:#431407">💡 Conseils pour intégrer ces outils dans vos formations</div>
+      <div class="tips-list">
+        <div class="tip">Créez un compte <strong>partagé de formation</strong> pour les outils payants (Midjourney, Runway) plutôt que de demander aux élèves de s'abonner individuellement.</div>
+        <div class="tip">Adobe Firefly est <strong>inclus dans votre licence Creative Cloud</strong> — vérifiez que vos étudiants y ont accès via l'ENT ou les postes de la salle.</div>
+        <div class="tip">Pour les <strong>évaluations</strong>, demandez aux élèves de garder leur historique de prompts comme trace de leur processus créatif.</div>
+        <div class="tip">Les référentiels CAP, BTS et DN MADE évoluent — vérifiez annuellement les instructions officielles sur <a href="https://eduscol.education.fr" target="_blank" style="color:var(--c1)">eduscol.education.fr</a>.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 — Ressources</div>
+</section>
+
+<!-- ═══════════════ CRCN ═══════════════ -->
+<section class="sec" id="sec-crcn">
+  <div class="crcn-pg-wrap">
+    <div class="crcn-pg-hdr">
+      <h2>Compétences CRCN-Édu travaillées</h2>
+      <p>Suivi de votre progression sur les compétences numériques enseignantes — Journée 6</p>
+    </div>
+    <div class="crcn-name-row">
+      <input id="crcn-name-input" type="text" placeholder="Votre prénom et nom…" style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;outline:none;background:#FAFAFA" oninput="updateCRCNBadges()">
+      <button class="cert-open-btn" onclick="openCert()">🏆 Voir mon certificat</button>
+    </div>
+    <div id="crcn-score-area"></div>
+    <div id="crcn-domains-area"></div>
+  </div>
+  <div class="page-foot">Sophiae · Formation IA · Journée 6 — CRCN-Édu</div>
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════ CERTIFICAT MODAL ═══════════════ -->
+<div class="cert-modal" id="cert-modal">
+  <div class="cert-overlay" onclick="closeCert()"></div>
+  <div class="cert-wrap">
+    <div class="cert-toolbar">
+      <div class="cert-toolbar-ttl">🏆 Certificat de participation — Journée 6</div>
+      <div class="cert-toolbar-btns">
+        <button class="cert-print-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+        <button class="cert-close-btn" onclick="closeCert()">✕ Fermer</button>
+      </div>
+    </div>
+    <div class="cert-paper" id="cert-paper"></div>
+  </div>
+</div>
+
+<script>
+// ─── LOCK ───
+(function(){
+  const k='j6-unlocked';
+  if(!sessionStorage.getItem(k)){
+    const ls=document.getElementById('lockscreen');
+    ls.style.display='flex';
+  }
+})();
+function checkLock(){
+  const v=document.getElementById('lock-input').value.trim().toLowerCase();
+  if(v==='selena'){
+    sessionStorage.setItem('j6-unlocked','1');
+    const ls=document.getElementById('lockscreen');
+    ls.style.display='none';
+    updateCRCNBadges();
+  } else {
+    document.getElementById('lock-err').style.display='block';
+    document.getElementById('lock-input').value='';
+  }
+}
+
+// ─── NAVIGATION ───
+function go(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  const sec=document.getElementById('sec-'+id);
+  if(sec){sec.classList.add('active');sec.scrollTop=0;}
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelector('.main').scrollTo(0,0);
+}
+function showCRCN(btn){
+  renderCompetencesPage();
+  go('crcn',btn);
+}
+
+// ─── STEPS ───
+function toggleStep(el){
+  el.classList.toggle('done');
+  updateCRCNBadges();
+}
+
+// ─── COPY PROMPT ───
+function copyP(btn){
+  const txt=btn.closest('.pcrd').querySelector('.pbody').innerText;
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent='✓ Copié';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copier';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ─── TOAST ───
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ─── TIMER ───
+let tSec=0,tRunning=false,tInt=null;
+function tToggle(){
+  const btn=document.getElementById('tstart');
+  if(tRunning){clearInterval(tInt);tRunning=false;btn.textContent='▶ Reprendre';}
+  else{tInt=setInterval(()=>{tSec++;renderTimer();},1000);tRunning=true;btn.textContent='⏸ Pause';}
+}
+function tReset(){
+  clearInterval(tInt);tRunning=false;tSec=0;renderTimer();
+  document.getElementById('tstart').textContent='▶ Démarrer';
+}
+function renderTimer(){
+  const d=document.getElementById('tdisp');
+  const m=String(Math.floor(tSec/60)).padStart(2,'0');
+  const s=String(tSec%60).padStart(2,'0');
+  d.textContent=m+':'+s;
+  d.className='timer-disp'+(tSec>=3300?' danger':tSec>=2700?' warn':'');
+}
+
+// ─── CRCN DATA ───
+// Mapping : code → {domain, name, label, ateliers:[1..8]}
+const CRCN_COMP = {
+  '1.3':{ domain:1, name:'Domaine 1 — Se former', label:'Veille &amp; formation continue', ateliers:[6] },
+  '1.4':{ domain:1, name:'Domaine 1 — Se former', label:'Numérique responsable', ateliers:[7,8] },
+  '1.5':{ domain:1, name:'Domaine 1 — Se former', label:'Posture critique &amp; réflexive', ateliers:[2,7,8] },
+  '2.1':{ domain:2, name:'Domaine 2 — Préparer &amp; concevoir', label:'Sélectionner des ressources', ateliers:[3,8] },
+  '2.2':{ domain:2, name:'Domaine 2 — Préparer &amp; concevoir', label:'Concevoir des ressources pédagogiques', ateliers:[1,2,4,5,6] },
+  '3.1':{ domain:3, name:'Domaine 3 — Enseigner', label:'Concevoir des situations d\'apprentissage', ateliers:[1,2,4,5,6,7] },
+  '3.2':{ domain:3, name:'Domaine 3 — Enseigner', label:'Mettre en œuvre des situations', ateliers:[3] },
+  '4.3':{ domain:4, name:'Domaine 4 — Accompagner', label:'Engager &amp; motiver les apprenants', ateliers:[1,3,4,5] },
+};
+
+const DOMAIN_META = {
+  1:{ icon:'📚', label:'Se former &amp; développer sa pratique', bg:'crcn-d1-bg' },
+  2:{ icon:'📐', label:'Préparer &amp; concevoir', bg:'crcn-d2-bg' },
+  3:{ icon:'🏫', label:'Enseigner &amp; animer', bg:'crcn-d3-bg' },
+  4:{ icon:'🤝', label:'Accompagner les apprenants', bg:'crcn-d4-bg' },
+};
+
+const COMP_LABELS = {
+  '1.3':'1.3','1.4':'1.4','1.5':'1.5','2.1':'2.1','2.2':'2.2','3.1':'3.1','3.2':'3.2','4.3':'4.3'
+};
+const COMP_COLOR = { 1:'#2563EB', 2:'#7C3AED', 3:'#16A34A', 4:'#D97706', 5:'#DC2626' };
+
+function isAtelDone(n){
+  const sec=document.getElementById('sec-a'+n);
+  if(!sec)return false;
+  const steps=sec.querySelectorAll('.step');
+  const done=sec.querySelectorAll('.step.done');
+  return steps.length>0 && done.length>=Math.ceil(steps.length/2);
+}
+function getDoneAtels(){
+  const r=[];
+  for(let i=1;i<=8;i++) if(isAtelDone(i)) r.push(i);
+  return r;
+}
+function getCompDegree(code){
+  const comp=CRCN_COMP[code];
+  const doneAtels=getDoneAtels();
+  const covered=comp.ateliers.filter(a=>doneAtels.includes(a)).length;
+  const total=comp.ateliers.length;
+  if(covered===0) return 'none';
+  if(covered<total) return 'dec';
+  return 'val';
+}
+function degLabel(d){ return{none:'Non abordée',dec:'En découverte',val:'Maîtrisée'}[d]||''; }
+function degClass(d){ return{none:'crcn-deg-none',dec:'crcn-deg-dec',val:'crcn-deg-val'}[d]||'crcn-deg-none'; }
+
+function renderCompetencesPage(){
+  const doneAtels=getDoneAtels();
+  const totalAtels=8;
+  const codes=Object.keys(CRCN_COMP);
+  const valCount=codes.filter(c=>getCompDegree(c)==='val').length;
+  const decCount=codes.filter(c=>getCompDegree(c)==='dec').length;
+  const noneCount=codes.filter(c=>getCompDegree(c)==='none').length;
+  const pct=Math.round((valCount/codes.length)*100);
+
+  // Score card
+  const r=88,cx=44,cy=44,stroke=10;
+  const circ=2*Math.PI*(r/2-stroke/2);
+  const dashArray=circ;
+  const dashOffset=circ*(1-pct/100);
+  document.getElementById('crcn-score-area').innerHTML=`
+<div class="crcn-score-card">
+  <div class="crcn-donut-wrap">
+    <svg class="crcn-donut" viewBox="0 0 88 88">
+      <circle cx="${cx}" cy="${cy}" r="${r/2-stroke/2}" fill="none" stroke="#FED7AA" stroke-width="${stroke}"/>
+      <circle cx="${cx}" cy="${cy}" r="${r/2-stroke/2}" fill="none" stroke="#EA580C" stroke-width="${stroke}"
+        stroke-dasharray="${dashArray.toFixed(1)}" stroke-dashoffset="${dashOffset.toFixed(1)}"
+        stroke-linecap="round" style="transition:stroke-dashoffset .5s"/>
+    </svg>
+    <div class="crcn-donut-num">${pct}%</div>
+  </div>
+  <div class="crcn-score-details">
+    <div class="crcn-score-ttl">Progression CRCN-Édu — Journée 6</div>
+    <div class="crcn-stats-row">
+      <div class="crcn-stat crcn-stat-green"><span class="crcn-stat-n">${valCount}</span><span class="crcn-stat-l">Maîtrisées</span></div>
+      <div class="crcn-stat crcn-stat-yellow"><span class="crcn-stat-n">${decCount}</span><span class="crcn-stat-l">En cours</span></div>
+      <div class="crcn-stat crcn-stat-gray"><span class="crcn-stat-n">${noneCount}</span><span class="crcn-stat-l">Non abordées</span></div>
+    </div>
+    <div class="crcn-score-sub">${doneAtels.length}/${totalAtels} ateliers complétés · ${valCount}/${codes.length} compétences validées</div>
+  </div>
+</div>`;
+
+  // Domain blocks
+  const byDomain={};
+  codes.forEach(c=>{
+    const d=CRCN_COMP[c].domain;
+    if(!byDomain[d])byDomain[d]=[];
+    byDomain[d].push(c);
+  });
+  let html='';
+  Object.keys(byDomain).sort().forEach(d=>{
+    const m=DOMAIN_META[d];
+    html+=`<div class="crcn-domain-block">
+  <div class="crcn-domain-hdr ${m.bg}">
+    <span class="crcn-domain-icon">${m.icon}</span>
+    <span class="crcn-domain-num">Domaine ${d}</span>
+    <span class="crcn-domain-label">${m.label}</span>
+  </div>`;
+    byDomain[d].forEach(code=>{
+      const comp=CRCN_COMP[code];
+      const deg=getCompDegree(code);
+      const doneAtels=getDoneAtels();
+      html+=`<div class="crcn-comp-row ${deg==='none'?'crcn-comp-nc':deg==='val'?'crcn-comp-done':'crcn-comp-active'}">
+  <span class="crcn-comp-code" style="background:${COMP_COLOR[comp.domain]}22;color:${COMP_COLOR[comp.domain]}">${code}</span>
+  <div class="crcn-comp-info">
+    <span class="crcn-comp-name">${comp.label}</span>
+    <div class="crcn-adots">
+      ${comp.ateliers.map(a=>`<div class="crcn-adot${doneAtels.includes(a)?' done':''}" title="Atelier ${a}">${a}</div>`).join('')}
+    </div>
+    <div class="crcn-prog-bar"><div class="crcn-prog-fill" style="width:${Math.round((comp.ateliers.filter(a=>doneAtels.includes(a)).length/comp.ateliers.length)*100)}%"></div></div>
+  </div>
+  <span class="crcn-degree ${degClass(deg)}">${degLabel(deg)}</span>
+</div>`;
+    });
+    html+='</div>';
+  });
+  document.getElementById('crcn-domains-area').innerHTML=html;
+}
+
+function updateCRCNBadges(){
+  for(let i=1;i<=8;i++){
+    const chk=document.getElementById('chk-a'+i);
+    if(chk) chk.style.display=isAtelDone(i)?'inline':'none';
+  }
+  const crcnSec=document.getElementById('sec-crcn');
+  if(crcnSec && crcnSec.classList.contains('active')) renderCompetencesPage();
+}
+
+// ─── CERTIFICAT ───
+function openCert(){
+  renderCertificate();
+  const m=document.getElementById('cert-modal');
+  m.style.display='flex';
+}
+function closeCert(){
+  document.getElementById('cert-modal').style.display='none';
+}
+
+function renderCertificate(){
+  const doneAtels=getDoneAtels();
+  const codes=Object.keys(CRCN_COMP);
+  const validated=codes.filter(c=>getCompDegree(c)==='val');
+  const discovering=codes.filter(c=>getCompDegree(c)==='dec');
+  const name=document.getElementById('crcn-name-input')?.value||'';
+  const today=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+
+  let compHtml='';
+  if(validated.length){
+    compHtml+=`<div class="cert-comp-section-ttl">✅ Compétences maîtrisées (${validated.length})</div><div class="cert-comp-grid">`;
+    validated.forEach(c=>{
+      const comp=CRCN_COMP[c];
+      compHtml+=`<div class="cert-comp-card valide">
+        <span class="cert-comp-badge" style="background:${COMP_COLOR[comp.domain]}22;color:${COMP_COLOR[comp.domain]}">${c}</span>
+        <span class="cert-comp-label">${comp.label.replace(/&amp;/g,'&')}</span>
+        <span class="cert-comp-deg" style="color:#EA580C">Maîtrisée</span>
+      </div>`;
+    });
+    compHtml+='</div>';
+  }
+  if(discovering.length){
+    compHtml+=`<div class="cert-comp-section-ttl">🔄 Compétences en découverte (${discovering.length})</div><div class="cert-comp-grid">`;
+    discovering.forEach(c=>{
+      const comp=CRCN_COMP[c];
+      compHtml+=`<div class="cert-comp-card maitrise">
+        <span class="cert-comp-badge" style="background:${COMP_COLOR[comp.domain]}22;color:${COMP_COLOR[comp.domain]}">${c}</span>
+        <span class="cert-comp-label">${comp.label.replace(/&amp;/g,'&')}</span>
+        <span class="cert-comp-deg" style="color:#B45309">En cours</span>
+      </div>`;
+    });
+    compHtml+='</div>';
+  }
+  if(!validated.length&&!discovering.length){
+    compHtml='<p style="color:#94A3B8;font-size:13px;margin:16px 0">Complétez des ateliers pour voir vos compétences apparaître.</p>';
+  }
+
+  document.getElementById('cert-paper').innerHTML=`
+<div class="cert-logo-line">
+  <div class="cert-logo-badge">JOURNÉE 6</div>
+  <div class="cert-logo-sep"></div>
+  <div class="cert-logo-pix">IA &amp; Métiers créatifs</div>
+</div>
+<div class="cert-main-title">Attestation de participation</div>
+<div class="cert-main-sub">Formation continue · Saint-Géraud Aurillac</div>
+<div class="cert-divider"></div>
+<div class="cert-recipient-block">
+  <div class="cert-certifies">Nous certifions que</div>
+  <div class="cert-recipient-name" contenteditable="true" data-placeholder="Prénom Nom">${name}</div>
+</div>
+<div class="cert-formation-block">
+  <div class="cert-form-item"><div class="cert-form-label">Formation</div><div class="cert-form-value">IA au service des métiers créatifs</div></div>
+  <div class="cert-form-item"><div class="cert-form-label">Journée</div><div class="cert-form-value">Journée 6</div></div>
+  <div class="cert-form-item"><div class="cert-form-label">Ateliers complétés</div><div class="cert-form-value">${doneAtels.length}/8 ateliers</div></div>
+  <div class="cert-form-item"><div class="cert-form-label">Date</div><div class="cert-form-value">${today}</div></div>
+</div>
+${compHtml}
+<div class="cert-footer">
+  <div>
+    <div class="cert-footer-label">Établissement</div>
+    <div class="cert-footer-value">Saint-Géraud</div>
+    <div class="cert-footer-line"></div>
+  </div>
+  <div>
+    <div class="cert-footer-label">Formation</div>
+    <div class="cert-footer-value">Sophiae</div>
+    <div class="cert-footer-line"></div>
+  </div>
+  <div>
+    <div class="cert-footer-label">Formateur</div>
+    <div class="cert-footer-value">&nbsp;</div>
+    <div class="cert-footer-line"></div>
+  </div>
+</div>
+<div class="cert-watermark">Généré automatiquement · Formation IA Journée 6 · ${today}</div>`;
+}
+</script>
+</body>
+</html>
