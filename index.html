@@ -287,7 +287,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
     <button class="nb" onclick="go('a3',this)" id="nb-a3">
       <span class="ndot" style="background:#DB2777"></span>
       <span>Atelier 3 · Réseaux sociaux &amp; Com</span>
-      <span class="meta"><span class="nbadge">55'</span><span class="nchk" id="chk-a3" style="display:none">✓</span></span>
+      <span class="meta"><span class="nbadge">75'</span><span class="nchk" id="chk-a3" style="display:none">✓</span></span>
     </button>
     <button class="nb" onclick="go('a4',this)" id="nb-a4">
       <span class="ndot" style="background:#0891B2"></span>
@@ -369,7 +369,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
           <div class="mc-dur">🎯 BMA · STD2A · DN MADE · Mastère</div>
         </div>
         <div class="mc" onclick="go('a3',document.getElementById('nb-a3'))" style="border-color:#DB2777">
-          <div class="mc-num" style="color:#DB2777">Atelier 3 · 55'</div>
+          <div class="mc-num" style="color:#DB2777">Atelier 3 · 75'</div>
           <div class="mc-need">Réseaux sociaux &amp; communication</div>
           <div class="mc-sub">Canva Magic, Predis.ai, Buffer AI — créer, planifier et optimiser ses contenus</div>
           <div class="mc-dur">🎯 BTS Com · Bachelor · Mastère DA</div>
@@ -727,12 +727,13 @@ Tu garderas tout ce qui est écrit et les symboles et figurés que tu colorieras
 <!-- ═══════════════ ATELIER 3 — RÉSEAUX SOCIAUX & COM ═══════════════ -->
 <section class="sec" id="sec-a3">
   <div class="ahdr" style="background:linear-gradient(135deg,#831843,#DB2777)">
-    <div class="atag">Atelier 3 · 55 minutes</div>
+    <div class="atag">Atelier 3 · 75 minutes</div>
     <h2>Communication réseaux sociaux &amp; contenus avec l'IA</h2>
     <div class="ameta">
-      <span class="adur">⏱ 55 min</span>
+      <span class="adur">⏱ 75 min</span>
       <span class="tpill">Canva Magic</span>
       <span class="tpill">Predis.ai</span>
+      <span class="tpill">Klap.app</span>
       <span class="tpill">Buffer AI</span>
       <span class="tpill">Meta AI</span>
     </div>
@@ -797,6 +798,29 @@ Maximum 200 mots par version
 Génère un brief créatif pour une série de 5 posts Instagram présentant nos formations.
 Inclus : direction artistique, palette couleurs, style typographique, cadrage photo, ambiance globale.
 Cible : 16-22 ans intéressés par les métiers créatifs.</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c2)">✂️ Activité 3 — Klap.app : transformer une vidéo en clips viraux (20 min)</div>
+      <div class="info-box" style="margin-bottom:12px">
+        <span style="font-size:16px">🎬</span>
+        <div><strong>Klap.app</strong> analyse automatiquement une vidéo longue (cours filmé, conférence, interview, événement d'établissement…) et en extrait les meilleurs moments en clips courts verticaux prêts pour TikTok, Instagram Reels et YouTube Shorts — avec recadrage IA, sous-titres animés et découpe automatique.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Créer un compte :</strong> <a href="https://klap.app" target="_blank" style="color:var(--c2);font-weight:600">klap.app</a> → inscription gratuite (3 vidéos/mois). L'outil accepte une URL YouTube ou un fichier vidéo uploadé directement.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Importer une vidéo :</strong> Collez une URL YouTube (ex : une conférence TED, un reportage sur votre domaine, ou une vidéo de présentation de l'établissement). Klap télécharge et analyse automatiquement le contenu.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Sélectionner les clips :</strong> Klap propose 5 à 10 extraits classés par score viral. Choisissez les meilleurs. Le recadrage vertical (9:16) est automatique : l'IA suit le visage du locuteur.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Personnaliser :</strong> Dans l'éditeur, choisissez un style de sous-titres animés (couleur, police, animation mot par mot). Ajoutez un logo ou un watermark si besoin. Exportez en MP4 haute qualité.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>5</span></div><div class="stxt"><strong>Cas pédagogique :</strong> Filmez 5 minutes d'une présentation orale d'élève ou d'un projet de classe. Laissez Klap générer 3 clips. Comparez les extraits choisis par l'IA avec ceux que vous auriez sélectionnés vous-même : qu'est-ce que l'IA optimise ? (accroche, rythme, émotion…)</div></div>
+      </div>
+      <div class="tips-box" style="background:#FDF2F8;border-color:#DB2777;margin-top:4px">
+        <div class="tips-ttl" style="color:#831843">💡 Usages pédagogiques Klap</div>
+        <div class="tips-list">
+          <div class="tip"><strong>BTS Communication :</strong> Repurposing de contenu — transformer un événement filmé (JPO, remise de prix) en série de clips pour chaque réseau.</div>
+          <div class="tip"><strong>DN MADE / Bachelor :</strong> Documenter un projet de création en vidéo longue, puis extraire des teasers courts pour le portfolio en ligne.</div>
+          <div class="tip"><strong>Tous niveaux :</strong> Sensibiliser aux algorithmes des réseaux — pourquoi l'IA choisit ces moments-là ? Qu'est-ce qui rend un extrait "viral" ?</div>
+        </div>
       </div>
     </div>
 
