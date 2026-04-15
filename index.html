@@ -282,7 +282,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
     <button class="nb" onclick="go('a2',this)" id="nb-a2">
       <span class="ndot" style="background:#7C3AED"></span>
       <span>Atelier 2 · Génération d'images pro</span>
-      <span class="meta"><span class="nbadge">60'</span><span class="nchk" id="chk-a2" style="display:none">✓</span></span>
+      <span class="meta"><span class="nbadge">80'</span><span class="nchk" id="chk-a2" style="display:none">✓</span></span>
     </button>
     <button class="nb" onclick="go('a3',this)" id="nb-a3">
       <span class="ndot" style="background:#DB2777"></span>
@@ -363,7 +363,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
           <div class="mc-dur">🎯 CAP · Bac Pro AMA · BMA · STD2A</div>
         </div>
         <div class="mc" onclick="go('a2',document.getElementById('nb-a2'))" style="border-color:#7C3AED">
-          <div class="mc-num" style="color:#7C3AED">Atelier 2 · 60'</div>
+          <div class="mc-num" style="color:#7C3AED">Atelier 2 · 80'</div>
           <div class="mc-need">Génération d'images pro</div>
           <div class="mc-sub">Midjourney, Ideogram, Leonardo.ai — prompting DA, moodboards, typographie</div>
           <div class="mc-dur">🎯 BMA · STD2A · DN MADE · Mastère</div>
@@ -556,10 +556,11 @@ abstract colorful background suitable for typography overlay, gradient mesh, con
     <div class="atag">Atelier 2 · 60 minutes</div>
     <h2>Génération d'images professionnelles pour les arts graphiques</h2>
     <div class="ameta">
-      <span class="adur">⏱ 60 min</span>
+      <span class="adur">⏱ 80 min</span>
       <span class="tpill">Midjourney</span>
       <span class="tpill">Ideogram</span>
       <span class="tpill">Leonardo.ai</span>
+      <span class="tpill">Gemini</span>
     </div>
     <div class="crcn-block">
       <div class="crcn-title">CRCN-Édu travaillées</div>
@@ -642,6 +643,28 @@ Magazine cover design for a graphic arts publication "FORMES & MATIÈRES", bold 
         <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Elements (cohérence) :</strong> Dans "Image Guidance", utilisez "Character Reference" pour maintenir un personnage cohérent entre plusieurs images. Idéal pour les projets BD ou communication avec mascotte.</div></div>
         <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Canvas :</strong> Ouvrez le Canvas Leonardo. Générez une illustration, puis avec Inpainting, modifiez seulement une zone (remplacer un vêtement, changer le fond) sans toucher au reste.</div></div>
         <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Projet synthèse :</strong> Créez une série de 4 visuels cohérents pour une marque fictive (même style, même univers). Assemblez-les dans un PDF de présentation sous InDesign ou Canva.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c7)">✨ Activité 3 — Gemini : améliorer une carte avec l'IA (20 min)</div>
+      <div class="info-box" style="margin-bottom:12px">
+        <span style="font-size:16px">📎</span>
+        <div><strong>Activité avec pièce jointe :</strong> Photographiez une carte réalisée à la main par un élève sur papier quadrillé (croquis de géographie, carte de synthèse…). Uploadez cette image dans Gemini pour obtenir une version retravaillée et mise en page proprement par l'IA — figurés colorés, légende en cursive, symboles reproduits fidèlement.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Photographier la carte :</strong> Prenez en photo une carte d'élève sur papier quadrillé (exemple : carte de synthèse sur l'Amazonie avec forêts, métropoles, axes de communication). Cadrez bien, lumière naturelle de préférence.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Ouvrir Gemini :</strong> Rendez-vous sur <strong>gemini.google.com</strong>. Cliquez sur l'icône 📎 (pièce jointe) pour uploader votre photo. Attendez le chargement complet de l'image.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Saisir le prompt :</strong> Collez le prompt ci-dessous (bouton Copier) et envoyez. Gemini va générer une version retravaillée : figurés colorés, légende en belle écriture cursive, symboles proprement reproduits.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Analyser et discuter :</strong> Comparez la carte originale et la version IA. Que l'IA a-t-elle amélioré ? Qu'a-t-elle mal interprété ? Quels usages pédagogiques imaginez-vous en géographie, histoire-géo ou SVT ?</div></div>
+      </div>
+      <div class="prompts">
+        <div class="pcrd">
+          <div class="phdr"><span class="ptitle">Prompt Gemini — Carte géographie (pièce jointe requise)</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+          <div class="pbody">Tu es professeur de géographie. Tu t'adresses à des élèves de seconde. Soit donc le plus clair possible et reste simple. Tu vas réaliser une image d'une carte sur papier quadrillé. Tu utiliseras les figurés suivants : forêt, métropoles, axes de communication.
+La légende sera bien écrite à la main (jolie écriture cursive).
+Tu garderas tout ce qui est écrit et les symboles et figurés que tu colorieras ou reproduiras proprement.</div>
+        </div>
       </div>
     </div>
 
