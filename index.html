@@ -282,7 +282,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
     <button class="nb" onclick="go('a2',this)" id="nb-a2">
       <span class="ndot" style="background:#7C3AED"></span>
       <span>Atelier 2 · Génération d'images pro</span>
-      <span class="meta"><span class="nbadge">80'</span><span class="nchk" id="chk-a2" style="display:none">✓</span></span>
+      <span class="meta"><span class="nbadge">120'</span><span class="nchk" id="chk-a2" style="display:none">✓</span></span>
     </button>
     <button class="nb" onclick="go('a3',this)" id="nb-a3">
       <span class="ndot" style="background:#DB2777"></span>
@@ -363,7 +363,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
           <div class="mc-dur">🎯 CAP · Bac Pro AMA · BMA · STD2A</div>
         </div>
         <div class="mc" onclick="go('a2',document.getElementById('nb-a2'))" style="border-color:#7C3AED">
-          <div class="mc-num" style="color:#7C3AED">Atelier 2 · 80'</div>
+          <div class="mc-num" style="color:#7C3AED">Atelier 2 · 120'</div>
           <div class="mc-need">Génération d'images pro</div>
           <div class="mc-sub">Midjourney, Ideogram, Leonardo.ai — prompting DA, moodboards, typographie</div>
           <div class="mc-dur">🎯 BMA · STD2A · DN MADE · Mastère</div>
@@ -450,7 +450,7 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Ar
     <div class="atag">Atelier 1 · 80 minutes</div>
     <h2>Adobe Firefly &amp; IA dans la suite Creative Cloud</h2>
     <div class="ameta">
-      <span class="adur">⏱ 80 min</span>
+      <span class="adur">⏱ 120 min</span>
       <span class="tpill">Adobe Firefly</span>
       <span class="tpill">Photoshop</span>
       <span class="tpill">Illustrator</span>
@@ -556,7 +556,7 @@ abstract colorful background suitable for typography overlay, gradient mesh, con
     <div class="atag">Atelier 2 · 60 minutes</div>
     <h2>Génération d'images professionnelles pour les arts graphiques</h2>
     <div class="ameta">
-      <span class="adur">⏱ 80 min</span>
+      <span class="adur">⏱ 120 min</span>
       <span class="tpill">Midjourney</span>
       <span class="tpill">Ideogram</span>
       <span class="tpill">Leonardo.ai</span>
@@ -668,6 +668,50 @@ Magazine cover design for a graphic arts publication "FORMES & MATIÈRES", bold 
           <div class="pbody">Tu es professeur de géographie. Tu t'adresses à des élèves de seconde. Soit donc le plus clair possible et reste simple. Tu vas réaliser une image d'une carte sur papier quadrillé. Tu utiliseras les figurés suivants : forêt, métropoles, axes de communication.
 La légende sera bien écrite à la main (jolie écriture cursive).
 Tu garderas tout ce qui est écrit et les symboles et figurés que tu colorieras ou reproduiras proprement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c7)">🤳 Activité 4 — Gemini : portrait artistique à partir d'un selfie (20 min)</div>
+      <div class="info-box" style="margin-bottom:12px">
+        <span style="font-size:16px">📎</span>
+        <div><strong>Activité avec pièce jointe :</strong> Prenez un selfie (ou utilisez n'importe quel portrait de face). Uploadez-le dans Gemini et appliquez les prompts ci-dessous pour transformer le portrait en image artistique noir &amp; blanc avec effets eau et lumière cinématographique.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Prendre le selfie :</strong> Utilisez votre téléphone ou webcam. Lumière naturelle de face, fond neutre de préférence. Un selfie simple suffit — l'IA se charge de la transformation artistique.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Uploader dans Gemini :</strong> gemini.google.com → icône 📎 → sélectionnez votre photo. Attendez le chargement complet avant d'envoyer le prompt.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Prompt Portrait N&amp;B :</strong> Copiez et envoyez le premier prompt (effet eau, noir &amp; blanc haute définition). Observez comment Gemini conserve les traits du visage tout en ajoutant l'ambiance artistique.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Prompt Mood cinématographique :</strong> Renvoyez la même image avec le second prompt pour un rendu plus atmosphérique. Comparez les deux résultats et discutez : quelles différences de style ? Quels usages en arts appliqués ?</div></div>
+      </div>
+      <div class="prompts">
+        <div class="pcrd">
+          <div class="phdr"><span class="ptitle">Prompt 1 — Portrait noir &amp; blanc (pièce jointe requise)</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+          <div class="pbody">Without changing my facial features, but just adding lashes, create a high contrast close portrait of my face focusing on front head, in black and white closeup, 35mm lens, 4K HD quality, giving proud expression, water droplets on my face, black shadow background, only face is visible with my profile looking sharper, adding wet hair, Ratio 4:3.</div>
+        </div>
+        <div class="pcrd">
+          <div class="phdr"><span class="ptitle">Prompt 2 — Mood cinématographique (pièce jointe requise)</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+          <div class="pbody">A black and white close-up portrait with visible water droplets and small bubbles on the face like the subject just emerged from water. The mood should feel intense and cinematic, with a dark, minimal background.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--c7)">🎨 Activité 5 — Gemini : coloriser une photo ancienne (20 min)</div>
+      <div class="info-box" style="margin-bottom:12px">
+        <span style="font-size:16px">📎</span>
+        <div><strong>Activité avec pièce jointe :</strong> Choisissez une photo noir &amp; blanc ancienne (photo de famille, image historique, archive d'établissement…). Uploadez-la dans Gemini pour obtenir une colorisation fidèle à l'époque, sans altérer la composition originale.</div>
+      </div>
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>1</span></div><div class="stxt"><strong>Choisir la photo :</strong> Sélectionnez une photo noir &amp; blanc : portrait de famille, photo de classe d'époque, image historique locale… Plus la photo a du contexte visuel, meilleure sera la colorisation.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>2</span></div><div class="stxt"><strong>Uploader dans Gemini :</strong> gemini.google.com → icône 📎 → sélectionnez votre photo. Attendez le chargement, puis collez le prompt ci-dessous.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>3</span></div><div class="stxt"><strong>Observer le résultat :</strong> Gemini va générer une version colorisée en respectant les teintes de l'époque. Vérifiez la cohérence : couleurs des vêtements, teinte de peau, végétation, matériaux.</div></div>
+        <div class="step" onclick="toggleStep(this)"><div class="snum"><span>4</span></div><div class="stxt"><strong>Discuter en classe :</strong> Comparez original et version colorisée. L'IA a-t-elle respecté la composition ? Quelles erreurs historiques ? Quels usages en histoire-géo, arts plastiques ou patrimoine local ?</div></div>
+      </div>
+      <div class="prompts">
+        <div class="pcrd">
+          <div class="phdr"><span class="ptitle">Prompt — Colorisation historique (pièce jointe requise)</span><button class="cpbtn" onclick="copyP(this)">📋 Copier</button></div>
+          <div class="pbody">Agrandis et colorise cette photo en respectant fidèlement l'époque. Ne modifie ni la composition, ni l'expression, ni l'arrière-plan, ni les vêtements. Ajoute uniquement des couleurs et des détails cohérents avec la période. La version finale doit se superposer parfaitement à l'image originale.</div>
         </div>
       </div>
     </div>
